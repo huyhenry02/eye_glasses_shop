@@ -109,7 +109,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item text-danger" href="#"
+                                                        <a class="dropdown-item text-danger" href="{{ route('admin.category.destroy', $category->id) }}"
                                                            onclick="return confirm('Bạn chắc chắn muốn xóa danh mục này?')">
                                                             <i class="feather feather-trash-2 me-2"></i>
                                                             <span>Xóa</span>

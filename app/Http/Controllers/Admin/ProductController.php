@@ -52,24 +52,7 @@ class ProductController extends Controller
     public function store(Request $request): ?RedirectResponse
     {
         try {
-            $data = $request->validate([
-                'category_id'     => ['required', 'integer', 'exists:categories,id'],
-                'code'            => ['required', 'string', 'max:100', 'unique:products,code'],
-                'name'            => ['required', 'string', 'max:255'],
-                'slug'            => ['nullable', 'string', 'max:255', 'unique:products,slug'],
-                'description'     => ['required', 'string'],
-                'price'           => ['required', 'integer', 'min:0'],
-                'discount_price'  => ['nullable', 'integer', 'min:0', 'lte:price'],
-                'stock_quantity'  => ['required', 'integer', 'min:0'],
-                'color'           => ['nullable', 'string', 'max:50'],
-                'material'        => ['nullable', 'string', 'max:100'],
-                'style'           => ['nullable', 'string'],
-                'is_active'       => ['required', Rule::in([0, 1, '0', '1'])],
-                'image'           => ['nullable', 'image', 'max:5120'],
-                'image_detail_1'  => ['nullable', 'image', 'max:5120'],
-                'image_detail_2'  => ['nullable', 'image', 'max:5120'],
-                'image_detail_3'  => ['nullable', 'image', 'max:5120'],
-            ]);
+            $data = $request->input();
 
             $data['slug'] = $this->normalizeSlug($data['slug'] ?? null, $data['name']);
 
@@ -93,28 +76,8 @@ class ProductController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
-
-            $data = $request->validate([
-                'category_id'     => ['required', 'integer', 'exists:categories,id'],
-                'code'            => ['required', 'string', 'max:100', Rule::unique('products', 'code')->ignore($product->id)],
-                'name'            => ['required', 'string', 'max:255'],
-                'slug'            => ['nullable', 'string', 'max:255', Rule::unique('products', 'slug')->ignore($product->id)],
-                'description'     => ['required', 'string'],
-                'price'           => ['required', 'integer', 'min:0'],
-                'discount_price'  => ['nullable', 'integer', 'min:0', 'lte:price'],
-                'stock_quantity'  => ['required', 'integer', 'min:0'],
-                'color'           => ['nullable', 'string', 'max:50'],
-                'material'        => ['nullable', 'string', 'max:100'],
-                'style'           => ['nullable', 'string'],
-                'is_active'       => ['required', Rule::in([0, 1, '0', '1'])],
-                'image'           => ['nullable', 'image', 'max:5120'],
-                'image_detail_1'  => ['nullable', 'image', 'max:5120'],
-                'image_detail_2'  => ['nullable', 'image', 'max:5120'],
-                'image_detail_3'  => ['nullable', 'image', 'max:5120'],
-            ]);
-
+            $data = $request->input();
             $data['slug'] = $this->normalizeSlug($data['slug'] ?? null, $data['name']);
-
             foreach (['image', 'image_detail_1', 'image_detail_2', 'image_detail_3'] as $field) {
                 if ($request->hasFile($field)) {
                     $this->deleteImageIfLocal($product->{$field} ?? null);
@@ -157,8 +120,12 @@ class ProductController extends Controller
 
     private function storeImage($file): string
     {
-        $path = $file->store('products', 'public');
-        return Storage::disk('public')->url($path);
+        $ext = strtolower($file->getClientOriginalExtension() ?: 'png');
+        $name = Str::random(20) . '.' . $ext;
+
+        $path = $file->storeAs('products', $name, 'public');
+
+        return '/storage/' . $path;
     }
 
     private function deleteImageIfLocal(?string $url): void
@@ -168,13 +135,10 @@ class ProductController extends Controller
             return;
         }
 
-        $prefix = Storage::disk('public')->url('');
-        if (!str_starts_with($url, $prefix)) {
-            return;
-        }
+        $path = parse_url($url, PHP_URL_PATH) ?: $url;
 
-        $relative = ltrim(str_replace($prefix, '', $url), '/');
-        if ($relative !== '') {
+        if (str_starts_with($path, '/storage/')) {
+            $relative = ltrim(str_replace('/storage/', '', $path), '/');
             Storage::disk('public')->delete($relative);
         }
     }

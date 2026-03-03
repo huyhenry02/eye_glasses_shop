@@ -41,7 +41,10 @@
             <div class="col-lg-12">
                 <div class="card border-top-0">
                     <div class="card-body">
-                        <form id="employeeForm" action="#" method="POST">
+                        <form id="employeeForm"
+                              action="{{ $isEdit ? route('admin.employee.update', $employee->id) : route('admin.employee.store') }}"
+                              method="POST">
+                            @csrf
                             <div class="row mb-4">
                                 <div class="col-lg-12">
                                     <h6 class="fw-bold mb-3">Thông tin nhân viên</h6>

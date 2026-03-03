@@ -136,7 +136,7 @@
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item"
-                                                           href="">
+                                                           href="{{ route('admin.customer.destroy', $customer->id) }}">
                                                             <i class="feather feather-trash-2 me-2"></i>
                                                             <span>Xóa</span>
                                                         </a>

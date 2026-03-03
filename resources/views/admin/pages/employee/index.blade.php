@@ -116,7 +116,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item text-danger" href="#"
+                                                        <a class="dropdown-item text-danger" href="{{ route('admin.employee.destroy', $employee->id) }}"
                                                            onclick="return confirm('Bạn chắc chắn muốn xóa nhân viên này?')">
                                                             <i class="feather feather-trash-2 me-2"></i>
                                                             <span>Xóa</span>

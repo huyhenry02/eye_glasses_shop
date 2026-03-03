@@ -42,15 +42,7 @@ class EmployeeController extends Controller
     public function store(Request $request): ?RedirectResponse
     {
         try {
-            $data = $request->validate([
-                'full_name' => ['required', 'string', 'max:100'],
-                'email' => ['required', 'email', 'max:100'],
-                'position' => ['required', 'string', 'max:100'],
-                'address' => ['required', 'string'],
-                'phone' => ['required', 'string', 'max:100', 'unique:users,phone'],
-                'password' => ['required', 'string', 'min:6'],
-            ]);
-
+            $data = $request->input();
             DB::transaction(static function () use ($data) {
                 $user = User::create([
                     'phone' => $data['phone'],
@@ -79,17 +71,7 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::with('user')->findOrFail($id);
-            $userId = $employee->user_id;
-
-            $data = $request->validate([
-                'full_name' => ['required', 'string', 'max:100'],
-                'email' => ['required', 'email', 'max:100'],
-                'position' => ['required', 'string', 'max:100'],
-                'address' => ['required', 'string'],
-                'phone' => ['required', 'string', 'max:100', Rule::unique('users', 'phone')->ignore($userId)],
-                'password' => ['nullable', 'string', 'min:6'],
-            ]);
-
+            $data = $request->input();
             DB::transaction(function () use ($employee, $data) {
                 $employee->user->update([
                     'phone' => $data['phone'],

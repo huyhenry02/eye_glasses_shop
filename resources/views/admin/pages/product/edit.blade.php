@@ -52,11 +52,13 @@
             <div class="col-lg-12">
                 <div class="card border-top-0">
                     <div class="card-body">
-                        <form id="productForm" action="#" method="POST" enctype="multipart/form-data">
+                        <form id="productForm"
+                              action="{{ $isEdit ? route('admin.product.update', $product->id) : route('admin.product.store') }}"
+                              method="POST" enctype="multipart/form-data">
+                            @csrf
                             <div class="row">
                                 <div class="col-lg-8">
                                     <h6 class="fw-bold mb-3">Thông tin cơ bản</h6>
-
                                     <div class="row">
                                         <div class="col-lg-6 mb-4">
                                             <label class="form-label fw-semibold">Danh mục</label>
@@ -254,7 +256,8 @@
                                              class="mt-2 rounded d-flex align-items-center justify-content-center"
                                              style="width:100%;max-width:260px;height:140px;overflow:hidden;border:1px solid #e9ecef;background:#f8f9fa;">
                                             @if($img3)
-                                                <img src="{{ $img3 }}" style="width:100%;height:100%;object-fit:cover;" alt="">
+                                                <img src="{{ $img3 }}" style="width:100%;height:100%;object-fit:cover;"
+                                                     alt="">
                                             @else
                                                 <span class="text-muted">Chưa có ảnh</span>
                                             @endif

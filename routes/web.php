@@ -38,7 +38,7 @@ Route::prefix('admin')
 
                 Route::post('/create', [EmployeeController::class, 'store'])->name('store');
                 Route::post('/edit/{id}', [EmployeeController::class, 'update'])->name('update');
-                Route::delete('/delete/{id}', [EmployeeController::class, 'destroy'])->name('destroy');
+                Route::get('/delete/{id}', [EmployeeController::class, 'destroy'])->name('destroy');
             });
 
         Route::prefix('customer')
@@ -50,7 +50,7 @@ Route::prefix('admin')
 
                 Route::post('/create', [CustomerController::class, 'store'])->name('store');
                 Route::post('/edit/{id}', [CustomerController::class, 'update'])->name('update');
-                Route::delete('/delete/{id}', [CustomerController::class, 'destroy'])->name('destroy');
+                Route::get('/delete/{id}', [CustomerController::class, 'destroy'])->name('destroy');
             });
 
         Route::prefix('category')
@@ -62,7 +62,7 @@ Route::prefix('admin')
 
                 Route::post('/create', [CategoryController::class, 'store'])->name('store');
                 Route::post('/edit/{id}', [CategoryController::class, 'update'])->name('update');
-                Route::delete('/delete/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+                Route::get('/delete/{id}', [CategoryController::class, 'destroy'])->name('destroy');
             });
 
         Route::prefix('product')
@@ -75,6 +75,6 @@ Route::prefix('admin')
 
                 Route::post('/create', [ProductController::class, 'store'])->name('store');
                 Route::post('/edit/{id}', [ProductController::class, 'update'])->name('update');
-                Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('destroy');
+                Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('destroy');
             });
     });

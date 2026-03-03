@@ -42,15 +42,7 @@ class CustomerController extends Controller
     public function store(Request $request): ?RedirectResponse
     {
         try {
-            $data = $request->validate([
-                'full_name' => ['required', 'string', 'max:100'],
-                'phone'     => ['required', 'string', 'max:100', 'unique:users,phone'],
-                'email'     => ['required', 'email', 'max:100'],
-                'gender'    => ['required', Rule::in(['Nam', 'Nữ', 'Khác'])],
-                'birthday'  => ['required', 'date'],
-                'address'   => ['required', 'string'],
-                'password'  => ['required', 'string', 'min:6'],
-            ]);
+            $data = $request->input();
 
             DB::transaction(function () use ($data) {
                 $user = User::create([
@@ -83,15 +75,7 @@ class CustomerController extends Controller
             $customer = Customer::with('user')->findOrFail($id);
             $userId = $customer->user_id;
 
-            $data = $request->validate([
-                'full_name' => ['required', 'string', 'max:100'],
-                'phone'     => ['required', 'string', 'max:100', Rule::unique('users', 'phone')->ignore($userId)],
-                'email'     => ['required', 'email', 'max:100'],
-                'gender'    => ['required', Rule::in(['Nam', 'Nữ', 'Khác'])],
-                'birthday'  => ['required', 'date'],
-                'address'   => ['required', 'string'],
-                'password'  => ['nullable', 'string', 'min:6'],
-            ]);
+            $data = $request->input();
 
             DB::transaction(static function () use ($customer, $data) {
                 $customer->user->update([

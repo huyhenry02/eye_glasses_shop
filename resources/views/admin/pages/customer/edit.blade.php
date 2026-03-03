@@ -43,7 +43,10 @@
             <div class="col-lg-12">
                 <div class="card border-top-0">
                     <div class="card-body">
-                        <form id="customerForm" action="#" method="POST">
+                        <form id="customerForm"
+                              action="{{ $isEdit ? route('admin.customer.update', $customer->id) : route('admin.customer.store') }}"
+                              method="POST">
+                            @csrf
                             <div class="row mb-4">
                                 <div class="col-lg-12">
                                     <h6 class="fw-bold mb-3">Thông tin khách hàng</h6>

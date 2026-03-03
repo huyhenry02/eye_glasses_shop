@@ -40,7 +40,10 @@
             <div class="col-lg-12">
                 <div class="card border-top-0">
                     <div class="card-body">
-                        <form id="categoryForm" action="#" method="POST">
+                        <form id="categoryForm"
+                              action="{{ $isEdit ? route('admin.category.update', $category->id) : route('admin.category.store') }}"
+                              method="POST">
+                            @csrf
                             <div class="row mb-4">
                                 <div class="col-lg-12">
                                     <h6 class="fw-bold mb-3">Thông tin danh mục</h6>
@@ -77,7 +80,8 @@
                                     <div id="sizeContainer" class="mt-2 d-flex flex-wrap gap-2"></div>
                                     <input type="hidden" id="sizeValues" name="sizes" value="{{ $sizesOld }}">
                                     <div class="text-muted mt-2" style="font-size: 13px;">
-                                        Gợi ý: Nhập từng size và nhấn Enter (VD: S, M, L, XL, XXL). Hệ thống sẽ lưu dạng: S,M,L,XL,XXL
+                                        Gợi ý: Nhập từng size và nhấn Enter (VD: S, M, L, XL, XXL). Hệ thống sẽ lưu
+                                        dạng: S,M,L,XL,XXL
                                     </div>
                                 </div>
 
@@ -116,6 +120,7 @@
                                 font-size: 13px;
                                 border: 1px solid rgba(13, 110, 253, 0.18);
                             }
+
                             .size-pill button {
                                 border: none;
                                 background: transparent;

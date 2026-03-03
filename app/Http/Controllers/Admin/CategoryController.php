@@ -38,17 +38,9 @@ class CategoryController extends Controller
     public function store(Request $request): ?RedirectResponse
     {
         try {
-            $data = $request->validate([
-                'code' => ['required', 'string', 'max:100', 'unique:categories,code'],
-                'name' => ['required', 'string', 'max:100'],
-                'sizes' => ['nullable', 'string'],
-                'description' => ['nullable', 'string'],
-            ]);
-
+            $data = $request->input();
             $data['sizes'] = $this->normalizeSizes($data['sizes'] ?? null);
-
             Category::create($data);
-
             return redirect()->route('admin.category.showIndex')->with('success', 'Tạo danh mục thành công.');
         } catch (ValidationException $e) {
             throw $e;
@@ -61,21 +53,9 @@ class CategoryController extends Controller
     {
         try {
             $category = Category::findOrFail($id);
-
-            $data = $request->validate([
-                'code' => [
-                    'required', 'string', 'max:100',
-                    Rule::unique('categories', 'code')->ignore($category->id),
-                ],
-                'name' => ['required', 'string', 'max:100'],
-                'sizes' => ['nullable', 'string'],
-                'description' => ['nullable', 'string'],
-            ]);
-
+            $data = $request->input();
             $data['sizes'] = $this->normalizeSizes($data['sizes'] ?? null);
-
             $category->update($data);
-
             return redirect()->route('admin.category.showIndex')->with('success', 'Cập nhật danh mục thành công.');
         } catch (ValidationException $e) {
             throw $e;
@@ -89,7 +69,6 @@ class CategoryController extends Controller
         try {
             $category = Category::findOrFail($id);
             $category->delete();
-
             return redirect()->route('admin.category.showIndex')->with('success', 'Xóa danh mục thành công.');
         } catch (\Throwable $e) {
             return redirect()->route('admin.category.showCreate')->with('error', 'Xóa danh mục thất bại.');
