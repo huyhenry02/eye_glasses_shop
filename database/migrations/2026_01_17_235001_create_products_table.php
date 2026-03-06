@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('slug', 255);
             $table->text('description');
+            $table->string('weight', 255);
+            $table->string('dimension', 255);
+            $table->string('material', 255);
+            $table->text('colors');
             $table->integer('price');
             $table->integer('discount_price')->nullable();
             $table->integer('stock_quantity');
@@ -23,10 +27,9 @@ return new class extends Migration
             $table->string('image_detail_1', 255)->nullable();
             $table->string('image_detail_2', 255)->nullable();
             $table->string('image_detail_3', 255)->nullable();
-            $table->string('color', 50)->nullable();
-            $table->string('material', 100)->nullable();
             $table->string('style')->nullable();
-            $table->boolean('is_active')->default('1');
+            $table->boolean('is_active')->default(1);
+            $table->boolean('is_featured')->default(0);
             $table->timestamps();
             $table->index('category_id', 'products_category_id_foreign');
             $table->foreign('category_id')->references('id')->on('categories');

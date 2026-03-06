@@ -34,6 +34,9 @@ class Product extends Model
         'name',
         'slug',
         'description',
+        'weight',
+        'dimension',
+        'material',
         'price',
         'discount_price',
         'stock_quantity',
@@ -41,10 +44,9 @@ class Product extends Model
         'image_detail_1',
         'image_detail_2',
         'image_detail_3',
-        'color',
-        'material',
-        'style',
+        'colors',
         'is_active',
+        'is_featured',
     ];
 
     public function category(): BelongsTo

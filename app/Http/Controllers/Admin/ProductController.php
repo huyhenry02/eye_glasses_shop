@@ -45,6 +45,15 @@ class ProductController extends Controller
     public function showDetail($id)
     {
         $product = Product::findOrFail($id);
+        if (!empty($product['colors'])) {
+            $product['colorArray'] = explode(',', $product['colors']);
+        }
+        if (!empty($product['category_id'])) {
+            $category = Category::find($product['category_id']);
+            if (!empty($category['sizes'])) {
+                $product['sizeArray'] = explode(',', $category['sizes']);
+            }
+        }
         return view('admin.pages.product.detail', [
             'product' => $product,
         ]);
@@ -55,7 +64,7 @@ class ProductController extends Controller
             $data = $request->input();
 
             $data['slug'] = $this->normalizeSlug($data['slug'] ?? null, $data['name']);
-
+            $data['colors'] = $this->normalizeColors($data['colors'] ?? null);
             foreach (['image', 'image_detail_1', 'image_detail_2', 'image_detail_3'] as $field) {
                 if ($request->hasFile($field)) {
                     $data[$field] = $this->storeImage($request->file($field));
@@ -78,6 +87,7 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
             $data = $request->input();
             $data['slug'] = $this->normalizeSlug($data['slug'] ?? null, $data['name']);
+            $data['colors'] = $this->normalizeColors($data['colors'] ?? null);
             foreach (['image', 'image_detail_1', 'image_detail_2', 'image_detail_3'] as $field) {
                 if ($request->hasFile($field)) {
                     $this->deleteImageIfLocal($product->{$field} ?? null);
@@ -139,5 +149,21 @@ class ProductController extends Controller
             $relative = ltrim(str_replace('/storage/', '', $path), '/');
             Storage::disk('public')->delete($relative);
         }
+    }
+
+    private function normalizeColors(?string $colors): ?string
+    {
+        $colors = trim((string) $colors);
+        if ($colors === '') {
+            return null;
+        }
+        $arr = array_filter(array_map(function ($s) {
+            $s = strtoupper(trim($s));
+            $s = preg_replace('/\s+/', '', $s);
+            return $s ?: null;
+        }, explode(',', $colors)));
+        $arr = array_values(array_unique($arr));
+
+        return $arr ? implode(',', $arr) : null;
     }
 }

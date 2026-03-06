@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Customer\ShopController;
 use Illuminate\Support\Facades\Route;
@@ -12,11 +11,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('customer.showIndex');
 });
-Route::prefix('auth')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('auth.showLogin');
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('auth.showRegister');
+Route::prefix('auth')
+    ->name('auth.')
+    ->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('showLogin');
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister');
 
     Route::post('/login', [AuthController::class, 'postLogin'])->name('postLogin');
+    Route::post('/register', [AuthController::class, 'postRegister'])->name('postRegister');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 Route::prefix('customer')
@@ -24,6 +26,8 @@ Route::prefix('customer')
     ->group(function () {
         Route::get('/index', [ShopController::class, 'showIndex'])->name('showIndex');
         Route::get('/contact', [ShopController::class, 'showContact'])->name('showContact');
+        Route::get('/products', [ShopController::class, 'showProducts'])->name('showProducts');
+        Route::get('/product/{product}', [ShopController::class, 'showProductDetail'])->name('showProductDetail');
     });
 
 Route::prefix('admin')

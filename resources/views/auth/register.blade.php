@@ -11,11 +11,11 @@
         <div class="container">
             <div class="flex-w flex-tr">
                 <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-                    <form action="#" method="POST">
+                    <form action="{{ route('auth.postRegister') }}" method="POST">
+                        @csrf
                         <h4 class="mtext-105 cl2 txt-center p-b-30">
                             Tạo tài khoản mới
                         </h4>
-
                         <div class="bor8 m-b-20 how-pos4-parent">
                             <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
                                    type="text" name="full_name"
@@ -24,7 +24,6 @@
                                 <i class="zmdi zmdi-account"></i>
                             </span>
                         </div>
-
                         <div class="bor8 m-b-20 how-pos4-parent">
                             <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
                                    type="text" name="phone"
@@ -33,7 +32,6 @@
                                 <i class="zmdi zmdi-phone"></i>
                             </span>
                         </div>
-
                         <div class="bor8 m-b-20 how-pos4-parent">
                             <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
                                    type="email" name="email"
@@ -42,7 +40,6 @@
                                 <i class="zmdi zmdi-email"></i>
                             </span>
                         </div>
-
                         <div class="bor8 m-b-20 how-pos4-parent">
                             <select class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
                                     name="gender" required
