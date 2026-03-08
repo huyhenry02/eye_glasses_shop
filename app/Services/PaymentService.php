@@ -46,10 +46,8 @@ class PaymentService
             $query .= urlencode($key) . '=' . urlencode($value) . '&';
             $hashData .= ($hashData ? '&' : '') . urlencode($key) . '=' . urlencode($value);
         }
-
         $vnpSecureHash = hash_hmac('sha512', $hashData, $this->vnpHashSecret);
         $redirectUrl = $this->vnpUrl . '?' . $query . 'vnp_SecureHash=' . $vnpSecureHash;
-
         return redirect($redirectUrl);
     }
 

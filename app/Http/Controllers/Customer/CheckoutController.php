@@ -12,6 +12,7 @@ use App\Services\PaymentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Random\RandomException;
 use Throwable;
 
@@ -214,10 +215,11 @@ class CheckoutController extends Controller
                 return redirect()->route('customer.orders.index')
                     ->with('success', 'Đặt hàng thành công.');
             }
+            $orderCode = $this->generateOrderCode();
             session([
                 'checkout' => [
                     'customer_id' => $customerId,
-                    'code' => $this->generateOrderCode(),
+                    'code' => $orderCode,
                     'total_amount' => $totalAmount,
                     'status' => Order::STATUS_PROCESSING,
                     'payment_status' => Order::PAYMENT_STATUS_PAID,
@@ -229,8 +231,10 @@ class CheckoutController extends Controller
                     'cart' => $cartItems->toArray(),
                 ]
             ]);
+            session()->save();
+            DB::commit();
             $returnUrl = route('customer.vnpay.return');
-            return $paymentService->createVnpayRedirectUrl($totalAmount, $this->generateOrderCode(), $returnUrl);
+            return $paymentService->createVnpayRedirectUrl($totalAmount, $orderCode, $returnUrl);
         } catch (Throwable $e) {
             DB::rollBack();
             return redirect()->back()

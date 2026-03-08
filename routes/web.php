@@ -30,16 +30,16 @@ Route::prefix('customer')
         Route::get('/products', [ShopController::class, 'showProducts'])->name('showProducts');
         Route::get('/product/{product}', [ShopController::class, 'showProductDetail'])->name('showProductDetail');
 
-        Route::get('/cart', [CheckoutController::class, 'showCart'])->name('showCart');
-        Route::post('/cart/add', [CheckoutController::class, 'addToCart'])->name('cart.add');
-        Route::post('/cart/update/{id}', [CheckoutController::class, 'updateCart'])->name('cart.update');
-        Route::delete('/cart/delete/{id}', [CheckoutController::class, 'deleteCart'])->name('cart.delete');
+        Route::get('/cart', [CheckoutController::class, 'showCart'])->name('showCart')->middleware('auth');
+        Route::post('/cart/add', [CheckoutController::class, 'addToCart'])->name('cart.add')->middleware('auth');;
+        Route::post('/cart/update/{id}', [CheckoutController::class, 'updateCart'])->name('cart.update')->middleware('auth');
+        Route::delete('/cart/delete/{id}', [CheckoutController::class, 'deleteCart'])->name('cart.delete')->middleware('auth');
 
-        Route::get('/checkout', [CheckoutController::class, 'showCheckout'])->name('showCheckout');
-        Route::post('/checkout', [CheckoutController::class, 'storeOrder'])->name('storeOrder');
+        Route::get('/checkout', [CheckoutController::class, 'showCheckout'])->name('showCheckout')->middleware('auth');
+        Route::post('/checkout', [CheckoutController::class, 'storeOrder'])->name('storeOrder')->middleware('auth');
 
-        Route::get('/orders', [CheckoutController::class, 'index'])->name('orders.index');
-        Route::get('/orders/{id}', [CheckoutController::class, 'show'])->name('orders.show');
+        Route::get('/orders', [CheckoutController::class, 'index'])->name('orders.index')->middleware('auth');
+        Route::get('/orders/{id}', [CheckoutController::class, 'show'])->name('orders.show')->middleware('auth');
         Route::get('/vnpay-return', [CheckoutController::class, 'vnpayReturn'])->name('vnpay.return')->middleware('auth');
     });
 
