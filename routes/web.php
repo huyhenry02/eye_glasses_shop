@@ -40,7 +40,7 @@ Route::prefix('customer')
 
         Route::get('/orders', [CheckoutController::class, 'index'])->name('orders.index');
         Route::get('/orders/{id}', [CheckoutController::class, 'show'])->name('orders.show');
-
+        Route::get('/vnpay-return', [CheckoutController::class, 'vnpayReturn'])->name('vnpay.return')->middleware('auth');
     });
 
 Route::prefix('admin')

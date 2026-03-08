@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Services\PaymentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -99,7 +100,7 @@ class CheckoutController extends Controller
             ->with('success', 'Đã thêm sản phẩm vào giỏ hàng.');
     }
 
-    public function updateCart(Request $request, $id)
+    public function updateCart(Request $request, $id): RedirectResponse
     {
         $customerId = $this->getCustomerId();
 
@@ -158,7 +159,7 @@ class CheckoutController extends Controller
         return view('customer.pages.checkout', compact('cartItems', 'subtotal'));
     }
 
-    public function storeOrder(Request $request): ?RedirectResponse
+    public function storeOrder(Request $request, PaymentService $paymentService): ?RedirectResponse
     {
         $customerId = $this->getCustomerId();
 
@@ -175,50 +176,63 @@ class CheckoutController extends Controller
             return redirect()->route('customer.showCart')
                 ->with('error', 'Giỏ hàng của bạn đang trống.');
         }
-
         DB::beginTransaction();
-
         try {
             $totalAmount = $cartItems->sum(function ($item) {
                 $price = $this->getProductPrice($item->product);
                 return $price * (int) $item->quantity;
             });
-
-            $order = Order::create([
-                'customer_id'      => $customerId,
-                'order_code'       => $this->generateOrderCode(),
-                'total_amount'     => $totalAmount,
-                'status'           => 'pending',
-                'payment_status'   => $request->payment_method === 'cod' ? 'unpaid' : 'pending',
-                'payment_method'   => $request->payment_method,
-                'shipping_name'    => $request->shipping_name,
-                'shipping_phone'   => $request->shipping_phone,
-                'shipping_email'   => $request->shipping_email,
-                'shipping_address' => $request->shipping_address,
-            ]);
-
-            foreach ($cartItems as $item) {
-                $price = $this->getProductPrice($item->product);
-
-                OrderDetail::create([
-                    'order_id'    => $order->id,
-                    'product_id'  => $item->product_id,
-                    'size'        => $item->size,
-                    'color'       => $item->color,
-                    'quantity'    => $item->quantity,
-                    'total_price' => $price * (int) $item->quantity,
+            $paymentMethod = $request->input('payment_method', 'cod');
+            if ($paymentMethod === 'cod') {
+                $order = Order::create([
+                    'customer_id'      => $customerId,
+                    'order_code'       => $this->generateOrderCode(),
+                    'total_amount'     => $totalAmount,
+                    'status'           => 'pending',
+                    'payment_status'   => $request->payment_method === 'cod' ? 'unpaid' : 'pending',
+                    'payment_method'   => $request->payment_method,
+                    'shipping_name'    => $request->shipping_name,
+                    'shipping_phone'   => $request->shipping_phone,
+                    'shipping_email'   => $request->shipping_email,
+                    'shipping_address' => $request->shipping_address,
                 ]);
+
+                foreach ($cartItems as $item) {
+                    $price = $this->getProductPrice($item->product);
+
+                    OrderDetail::create([
+                        'order_id'    => $order->id,
+                        'product_id'  => $item->product_id,
+                        'size'        => $item->size,
+                        'color'       => $item->color,
+                        'quantity'    => $item->quantity,
+                        'total_price' => $price * (int) $item->quantity,
+                    ]);
+                }
+                Cart::where('customer_id', $customerId)->delete();
+                DB::commit();
+                return redirect()->route('customer.orders.index')
+                    ->with('success', 'Đặt hàng thành công.');
             }
-
-            Cart::where('customer_id', $customerId)->delete();
-
-            DB::commit();
-
-            return redirect()->route('customer.orders.index')
-                ->with('success', 'Đặt hàng thành công.');
+            session([
+                'checkout' => [
+                    'customer_id' => $customerId,
+                    'code' => $this->generateOrderCode(),
+                    'total_amount' => $totalAmount,
+                    'status' => Order::STATUS_PROCESSING,
+                    'payment_status' => Order::PAYMENT_STATUS_PAID,
+                    'payment_method' => $paymentMethod,
+                    'shipping_name'    => $request->shipping_name,
+                    'shipping_phone'   => $request->shipping_phone,
+                    'shipping_email'   => $request->shipping_email,
+                    'shipping_address' => $request->shipping_address,
+                    'cart' => $cartItems->toArray(),
+                ]
+            ]);
+            $returnUrl = route('customer.vnpay.return');
+            return $paymentService->createVnpayRedirectUrl($totalAmount, $this->generateOrderCode(), $returnUrl);
         } catch (Throwable $e) {
             DB::rollBack();
-
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Đặt hàng thất bại: ' . $e->getMessage());
@@ -255,5 +269,49 @@ class CheckoutController extends Controller
             ->findOrFail($id);
 
         return view('customer.pages.order-detail', compact('order'));
+    }
+
+    public function vnpayReturn(Request $request, PaymentService $paymentService)
+    {
+        return $paymentService->handleVnpayReturn(
+            $request,
+            'checkout',
+            function ($checkoutData, $req) use ($paymentService) {
+                $order = Order::create([
+                    'customer_id' => $checkoutData['customer_id'],
+                    'order_code' => $checkoutData['code'],
+                    'total_amount' => $checkoutData['total_amount'],
+                    'status' => $checkoutData['status'],
+                    'payment_status' => $checkoutData['payment_status'],
+                    'payment_method' => $checkoutData['payment_method'],
+                    'shipping_name' => $checkoutData['shipping_name'],
+                    'shipping_phone' => $checkoutData['shipping_phone'],
+                    'shipping_email' => $checkoutData['shipping_email'],
+                    'shipping_address' => $checkoutData['shipping_address'],
+                    'payment_time' => now(),
+                    'payment_transaction_id' => $req->get('vnp_TxnRef'),
+                    'payment_bank_code' => $req->get('vnp_BankCode'),
+                    'payment_response_code' => $req->get('vnp_ResponseCode'),
+                    'payment_secure_hash' => $req->get('vnp_SecureHash'),
+                ]);
+
+                foreach ($checkoutData['cart'] as $item) {
+                    $cartItem = Cart::find($item['id']);
+                    $priceItemCart = $cartItem->product->discount_price * $cartItem->quantity;
+                    OrderDetail::create([
+                        'order_id' => $order->id,
+                        'product_id' => $item['product_id'],
+                        'quantity' => $item['quantity'],
+                        'total_price' => $priceItemCart,
+                        'size' => $item['size']
+                    ]);
+                    $paymentService->handleInventory($cartItem->product, $cartItem->quantity, 'create');
+                    $cartItem->product->save();
+                    $cartItem->delete();
+                }
+                return redirect()->route('customer.orders.index')->with('success', 'Thanh toán thành công!');
+            },
+            fn($msg) => redirect()->route('customer.showCart')->with('error', $msg)
+        );
     }
 }

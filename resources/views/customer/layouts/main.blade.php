@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <title>Home</title>
     <meta charset="UTF-8">
@@ -31,6 +31,9 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/customer/vendor/perfect-scrollbar/perfect-scrollbar.css">
     <!--===============================================================================================-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/customer/css/util.css">
     <link rel="stylesheet" type="text/css" href="/customer/css/main.css">
     <!--===============================================================================================-->
@@ -157,5 +160,86 @@
 </script>
 <!--===============================================================================================-->
 <script src="/customer/js/main.js"></script>
+<style>
+    html, body {
+        font-family: 'Be Vietnam Pro', sans-serif !important;
+        font-size: 15px;
+        color: #333;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+
+    body, p, span, a, li, ul, ol, div,
+    input, textarea, select, option, button,
+    label, small, strong, em {
+        font-family: 'Be Vietnam Pro', sans-serif !important;
+    }
+
+    .stext-101, .stext-102, .stext-103, .stext-104, .stext-105,
+    .mtext-101, .mtext-102, .mtext-103, .mtext-104, .mtext-105, .mtext-106,
+    .ltext-101, .ltext-102, .ltext-103, .ltext-104, .ltext-105 {
+        font-family: 'Be Vietnam Pro', sans-serif !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Be Vietnam Pro', sans-serif !important;
+        font-weight: 700 !important;
+        letter-spacing: 0;
+    }
+
+    .main-menu > li > a,
+    .main-menu-m a,
+    .logo,
+    .wrap-menu-desktop .main-menu a {
+        font-family: 'Be Vietnam Pro', sans-serif !important;
+        font-weight: 600 !important;
+    }
+
+    .js-name-detail,
+    .js-name-b2,
+    .product-name,
+    .name-product,
+    .block2-name,
+    .mtext-105,
+    .mtext-106 {
+        font-family: 'Be Vietnam Pro', sans-serif !important;
+        font-weight: 600 !important;
+    }
+
+    .product-price,
+    .stext-105,
+    .mtext-106,
+    .ltext-102 {
+        font-family: 'Be Vietnam Pro', sans-serif !important;
+        font-weight: 700 !important;
+    }
+
+    button,
+    .btn,
+    .flex-c-m,
+    .how-pos2,
+    .how-pos1,
+    .js-addcart-detail {
+        font-family: 'Be Vietnam Pro', sans-serif !important;
+        font-weight: 600 !important;
+    }
+
+    input,
+    select,
+    textarea,
+    .rs1-select2 .select2-container .select2-selection--single,
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        font-family: 'Be Vietnam Pro', sans-serif !important;
+        font-weight: 400 !important;
+    }
+
+    .ltext-103,
+    .sec-title,
+    .section-title {
+        font-family: 'Be Vietnam Pro', sans-serif !important;
+        font-weight: 700 !important;
+    }
+</style>
 </body>
 </html>

@@ -102,19 +102,16 @@
                                                 <span class="text-muted">—</span>
                                             @endif
                                         </td>
-
                                         <td>
                                             <span class="badge {{ ($product->stock_quantity ?? 0) > 0 ? 'bg-soft-success text-success' : 'bg-soft-danger text-danger' }}">
                                                 {{ (int)($product->stock_quantity ?? 0) }}
                                             </span>
                                         </td>
-
                                         <td>
                                             <span class="badge {{ $isActive ? 'bg-soft-success text-success' : 'bg-soft-secondary text-secondary' }}">
                                                 {{ $isActive ? 'Đang bán' : 'Tạm ẩn' }}
                                             </span>
                                         </td>
-
                                         <td class="text-muted">
                                             {{ $product->created_at ? $product->created_at->format('d/m/Y H:i') : '—' }}
                                         </td>

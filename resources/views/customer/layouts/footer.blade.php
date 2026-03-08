@@ -1,143 +1,154 @@
 <footer class="bg3 p-t-75 p-b-32">
     <div class="container">
         <div class="row">
+
             <div class="col-sm-6 col-lg-3 p-b-50">
                 <h4 class="stext-301 cl0 p-b-30">
-                    Categories
+                    Danh mục
                 </h4>
 
                 <ul>
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Women
+                        <a href="{{ route('customer.showProducts') }}" class="stext-107 cl7 hov-cl1 trans-04">
+                            Thời trang nữ
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Men
+                        <a href="{{ route('customer.showProducts') }}" class="stext-107 cl7 hov-cl1 trans-04">
+                            Thời trang nam
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Shoes
+                        <a href="{{ route('customer.showProducts') }}" class="stext-107 cl7 hov-cl1 trans-04">
+                            Giày dép
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Watches
+                        <a href="{{ route('customer.showProducts') }}" class="stext-107 cl7 hov-cl1 trans-04">
+                            Phụ kiện
                         </a>
                     </li>
                 </ul>
             </div>
 
+
             <div class="col-sm-6 col-lg-3 p-b-50">
                 <h4 class="stext-301 cl0 p-b-30">
-                    Help
+                    Hỗ trợ
                 </h4>
 
                 <ul>
+                    @auth
+                        <li class="p-b-10">
+                            <a href="{{ route('customer.orders.index') }}" class="stext-107 cl7 hov-cl1 trans-04">
+                                Đơn hàng của tôi
+                            </a>
+                        </li>
+                    @endauth
+
+                    @guest
+                        <li class="p-b-10">
+                            <a href="{{ route('auth.showLogin') }}" class="stext-107 cl7 hov-cl1 trans-04">
+                                Đăng nhập
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="{{ route('auth.showRegister') }}" class="stext-107 cl7 hov-cl1 trans-04">
+                                Đăng ký
+                            </a>
+                        </li>
+                    @endguest
+
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Track Order
+                        <a href="{{ route('customer.showProducts') }}" class="stext-107 cl7 hov-cl1 trans-04">
+                            Mua sắm
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Returns
-                        </a>
-                    </li>
-
-                    <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Shipping
-                        </a>
-                    </li>
-
-                    <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            FAQs
+                        <a href="{{ route('customer.showIndex') }}" class="stext-107 cl7 hov-cl1 trans-04">
+                            Trang chủ
                         </a>
                     </li>
                 </ul>
             </div>
 
+
             <div class="col-sm-6 col-lg-3 p-b-50">
                 <h4 class="stext-301 cl0 p-b-30">
-                    GET IN TOUCH
+                    Liên hệ
                 </h4>
 
                 <p class="stext-107 cl7 size-201">
-                    Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+                    Nếu bạn cần hỗ trợ về sản phẩm, đơn hàng hoặc tài khoản, vui lòng liên hệ với chúng tôi để được tư vấn nhanh chóng.
                 </p>
 
                 <div class="p-t-27">
-                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16" title="Facebook">
                         <i class="fa fa-facebook"></i>
                     </a>
 
-                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16" title="Instagram">
                         <i class="fa fa-instagram"></i>
                     </a>
 
-                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16" title="Pinterest">
                         <i class="fa fa-pinterest-p"></i>
                     </a>
                 </div>
             </div>
 
+
             <div class="col-sm-6 col-lg-3 p-b-50">
                 <h4 class="stext-301 cl0 p-b-30">
-                    Newsletter
+                    Nhận tin khuyến mãi
                 </h4>
 
                 <form>
                     <div class="wrap-input1 w-full p-b-4">
-                        <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+                        <input class="input1 bg-none plh1 stext-107 cl7"
+                               type="text"
+                               name="email"
+                               placeholder="Nhập email của bạn">
                         <div class="focus-input1 trans-04"></div>
                     </div>
 
                     <div class="p-t-18">
-                        <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-                            Subscribe
+                        <button type="submit" class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+                            Đăng ký nhận tin
                         </button>
                     </div>
                 </form>
             </div>
+
         </div>
 
         <div class="p-t-40">
             <div class="flex-c-m flex-w p-b-18">
-                <a href="#" class="m-all-1">
+                <a href="javascript:void(0)" class="m-all-1">
                     <img src="/customer/images/icons/icon-pay-01.png" alt="ICON-PAY">
                 </a>
 
-                <a href="#" class="m-all-1">
+                <a href="javascript:void(0)" class="m-all-1">
                     <img src="/customer/images/icons/icon-pay-02.png" alt="ICON-PAY">
                 </a>
 
-                <a href="#" class="m-all-1">
+                <a href="javascript:void(0)" class="m-all-1">
                     <img src="/customer/images/icons/icon-pay-03.png" alt="ICON-PAY">
                 </a>
 
-                <a href="#" class="m-all-1">
+                <a href="javascript:void(0)" class="m-all-1">
                     <img src="/customer/images/icons/icon-pay-04.png" alt="ICON-PAY">
                 </a>
 
-                <a href="#" class="m-all-1">
+                <a href="javascript:void(0)" class="m-all-1">
                     <img src="/customer/images/icons/icon-pay-05.png" alt="ICON-PAY">
                 </a>
             </div>
-
-            <p class="stext-107 cl6 txt-center">
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp; distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-
-            </p>
         </div>
     </div>
 </footer>
