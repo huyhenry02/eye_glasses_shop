@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Customer\ShopController;
+use App\Http\Controllers\Admin\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -93,5 +94,15 @@ Route::prefix('admin')
                 Route::post('/create', [ProductController::class, 'store'])->name('store');
                 Route::post('/edit/{id}', [ProductController::class, 'update'])->name('update');
                 Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('destroy');
+            });
+        Route::prefix('order')
+            ->name('order.')
+            ->group(function () {
+                Route::get('/', [OrderController::class, 'showIndex'])->name('showIndex');
+                Route::get('/detail/{id}', [OrderController::class, 'showDetail'])->name('showDetail');
+                Route::get('/edit/{id}', [OrderController::class, 'showEdit'])->name('showEdit');
+
+                Route::post('/edit/{id}', [OrderController::class, 'update'])->name('update');
+                Route::delete('/delete/{id}', [OrderController::class, 'destroy'])->name('destroy');
             });
     });

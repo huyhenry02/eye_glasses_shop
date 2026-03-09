@@ -28,9 +28,9 @@
                         <tr>
                             <td>{{ $order->order_code }}</td>
                             <td>{{ number_format($order->total_amount, 0, ',', '.') }} đ</td>
-                            <td>{{ $order->status }}</td>
-                            <td>{{ $order->payment_status }}</td>
-                            <td>{{ $order->payment_method }}</td>
+                            <td>{{ \App\Models\Order::STATUSES[$order->status] ?? '—' }}</td>
+                            <td>{{ \App\Models\Order::PAYMENT_STATUSES[$order->payment_status] ?? '—' }}</td>
+                            <td>{{ \App\Models\Order::PAYMENT_METHODS[$order->payment_method] ?? '—' }}</td>
                             <td>{{ $order->created_at ? $order->created_at->format('d/m/Y H:i') : '' }}</td>
                             <td>
                                 <a href="{{ route('customer.orders.show', $order->id) }}" class="btn btn-sm btn-primary">

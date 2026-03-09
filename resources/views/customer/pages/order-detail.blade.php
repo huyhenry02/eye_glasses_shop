@@ -9,9 +9,21 @@
             <p><strong>Số điện thoại:</strong> {{ $order->shipping_phone }}</p>
             <p><strong>Email:</strong> {{ $order->shipping_email }}</p>
             <p><strong>Địa chỉ:</strong> {{ $order->shipping_address }}</p>
-            <p><strong>Trạng thái đơn:</strong> {{ $order->status }}</p>
-            <p><strong>Trạng thái thanh toán:</strong> {{ $order->payment_status }}</p>
-            <p><strong>Phương thức thanh toán:</strong> {{ $order->payment_method }}</p>
+
+            <p>
+                <strong>Trạng thái đơn:</strong>
+                {{ \App\Models\Order::STATUSES[$order->status] ?? '—' }}
+            </p>
+
+            <p>
+                <strong>Trạng thái thanh toán:</strong>
+                {{ \App\Models\Order::PAYMENT_STATUSES[$order->payment_status] ?? '—' }}
+            </p>
+
+            <p>
+                <strong>Phương thức thanh toán:</strong>
+                {{ \App\Models\Order::PAYMENT_METHODS[$order->payment_method] ?? '—' }}
+            </p>
         </div>
 
         <div class="table-responsive">
@@ -29,8 +41,8 @@
                 @foreach($order->orderDetails as $detail)
                     <tr>
                         <td>{{ $detail->product->name ?? 'Sản phẩm' }}</td>
-                        <td>{{ $detail->size }}</td>
-                        <td>{{ $detail->color }}</td>
+                        <td>{{ $detail->size ?? '—' }}</td>
+                        <td>{{ $detail->color ?? '—' }}</td>
                         <td>{{ $detail->quantity }}</td>
                         <td>{{ number_format($detail->total_price, 0, ',', '.') }} đ</td>
                     </tr>
@@ -40,7 +52,9 @@
         </div>
 
         <div class="text-right">
-            <h5><strong>Tổng cộng: {{ number_format($order->total_amount, 0, ',', '.') }} đ</strong></h5>
+            <h5>
+                <strong>Tổng cộng: {{ number_format($order->total_amount, 0, ',', '.') }} đ</strong>
+            </h5>
         </div>
     </div>
 @endsection

@@ -57,8 +57,7 @@
                         <span class="nxl-mtext">Quản lý đơn hàng</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item"><a class="nxl-link" href="">Danh sách đơn hàng</a></li>
-                        <li class="nxl-item"><a class="nxl-link" href="">Thêm mới đơn hàng</a></li>
+                        <li class="nxl-item"><a class="nxl-link" href="{{ route('admin.order.showIndex') }}">Danh sách đơn hàng</a></li>
                     </ul>
                 </li>
                 <li class="nxl-item nxl-hasmenu nxl-trigger">
