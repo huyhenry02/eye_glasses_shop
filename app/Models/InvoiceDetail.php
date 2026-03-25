@@ -11,9 +11,10 @@ class InvoiceDetail extends Model
     protected $fillable = [
         'invoice_id',
         'product_id',
-        'size',
         'quantity',
         'total_price',
+        'size',
+        'color',
     ];
 
     public function invoice(): BelongsTo

@@ -1,85 +1,119 @@
 @extends('customer.layouts.main')
 @section('content')
-    <section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/bg-01.jpg');">
-        <h2 class="ltext-105 cl0 txt-center">
-            Contact
-        </h2>
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="container">
+                <div
+                    class="banner_content d-md-flex justify-content-between align-items-center"
+                >
+                    <div class="mb-3 mb-md-0">
+                        <h2>Contact Us</h2>
+                        <p>Very us move be blessed multiply night</p>
+                    </div>
+                    <div class="page_link">
+                        <a href="index.html">Home</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+    <!--================End Home Banner Area =================-->
 
-    <section class="bg0 p-t-104 p-b-116">
+    <!-- ================ contact section start ================= -->
+    <section class="section_gap">
         <div class="container">
-            <div class="flex-w flex-tr">
-                <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-                    <form>
-                        <h4 class="mtext-105 cl2 txt-center p-b-30">
-                            Send Us A Message
-                        </h4>
+            <div class="d-none d-sm-block mb-5 pb-4">
+                <div id="map" style="height: 480px;"></div>
+                <script>
+                    function initMap() {
+                        var uluru = {lat: -25.363, lng: 131.044};
+                        var grayStyles = [
+                            {
+                                featureType: "all",
+                                stylers: [
+                                    { saturation: -90 },
+                                    { lightness: 50 }
+                                ]
+                            },
+                            {elementType: 'labels.text.fill', stylers: [{color: '#A3A3A3'}]}
+                        ];
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            center: {lat: -31.197, lng: 150.744},
+                            zoom: 9,
+                            styles: grayStyles,
+                            scrollwheel:  false
+                        });
+                    }
 
-                        <div class="bor8 m-b-20 how-pos4-parent">
-                            <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Your Email Address">
-                            <img class="how-pos4 pointer-none" src="/customer/images/icons/icon-email.png" alt="ICON">
+                </script>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpfS1oRGreGSBU5HHjMmQ3o5NLw7VdJ6I&callback=initMap"></script>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="contact-title">Get in Touch</h2>
+                </div>
+                <div class="col-lg-8 mb-4 mb-lg-0">
+                    <form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9" placeholder="Enter Message"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input class="form-control" name="name" id="name" type="text" placeholder="Enter your name">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input class="form-control" name="email" id="email" type="email" placeholder="Enter email address">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <input class="form-control" name="subject" id="subject" type="text" placeholder="Enter Subject">
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="bor8 m-b-30">
-                            <textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?"></textarea>
+                        <div class="form-group mt-lg-3">
+                            <button type="submit" class="main_btn">Send Message</button>
                         </div>
-
-                        <button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
-                            Submit
-                        </button>
                     </form>
+
+
                 </div>
 
-                <div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
-                    <div class="flex-w w-full p-b-42">
-						<span class="fs-18 cl5 txt-center size-211">
-							<span class="lnr lnr-map-marker"></span>
-						</span>
-
-                        <div class="size-212 p-t-2">
-							<span class="mtext-110 cl2">
-								Address
-							</span>
-
-                            <p class="stext-115 cl6 size-213 p-t-18">
-                                Coza Store Center 8th floor, 379 Hudson St, New York, NY 10018 US
-                            </p>
+                <div class="col-lg-4">
+                    <div class="media contact-info">
+                        <span class="contact-info__icon"><i class="ti-home"></i></span>
+                        <div class="media-body">
+                            <h3>Buttonwood, California.</h3>
+                            <p>Rosemead, CA 91770</p>
                         </div>
                     </div>
-
-                    <div class="flex-w w-full p-b-42">
-						<span class="fs-18 cl5 txt-center size-211">
-							<span class="lnr lnr-phone-handset"></span>
-						</span>
-
-                        <div class="size-212 p-t-2">
-							<span class="mtext-110 cl2">
-								Lets Talk
-							</span>
-
-                            <p class="stext-115 cl1 size-213 p-t-18">
-                                +1 800 1236879
-                            </p>
+                    <div class="media contact-info">
+                        <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                        <div class="media-body">
+                            <h3><a href="tel:454545654">00 (440) 9865 562</a></h3>
+                            <p>Mon to Fri 9am to 6pm</p>
                         </div>
                     </div>
-
-                    <div class="flex-w w-full">
-						<span class="fs-18 cl5 txt-center size-211">
-							<span class="lnr lnr-envelope"></span>
-						</span>
-
-                        <div class="size-212 p-t-2">
-							<span class="mtext-110 cl2">
-								Sale Support
-							</span>
-
-                            <p class="stext-115 cl1 size-213 p-t-18">
-                                contact@example.com
-                            </p>
+                    <div class="media contact-info">
+                        <span class="contact-info__icon"><i class="ti-email"></i></span>
+                        <div class="media-body">
+                            <h3><a href="mailto:support@colorlib.com">support@colorlib.com</a></h3>
+                            <p>Send us your query anytime!</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- ================ contact section end ================= -->
 @endsection

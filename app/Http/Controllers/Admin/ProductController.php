@@ -9,21 +9,24 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class ProductController extends Controller
 {
     public function showIndex()
     {
-        $products = Product::all();
+        $products = Product::with('category')
+            ->orderByDesc('id')
+            ->get();
         return view('admin.pages.product.index', [
             'products' => $products
         ]);
     }
+
     public function showCreate()
     {
-        $categories = Category::all();
+        $categories = Category::where('is_active', 1)->orderBy('name')->get();
         return view('admin.pages.product.edit', [
             'mode' => 'create',
             'product' => null,
@@ -33,7 +36,7 @@ class ProductController extends Controller
 
     public function showEdit($id)
     {
-        $categories = Category::all();
+        $categories = Category::where('is_active', 1)->orderBy('name')->get();
         $product = Product::findOrFail($id);
         return view('admin.pages.product.edit', [
             'mode' => 'edit',
@@ -44,40 +47,31 @@ class ProductController extends Controller
 
     public function showDetail($id)
     {
-        $product = Product::findOrFail($id);
-        if (!empty($product['colors'])) {
-            $product['colorArray'] = explode(',', $product['colors']);
-        }
-        if (!empty($product['category_id'])) {
-            $category = Category::find($product['category_id']);
-            if (!empty($category['sizes'])) {
-                $product['sizeArray'] = explode(',', $category['sizes']);
-            }
-        }
+        $product = Product::with('category')->findOrFail($id);
         return view('admin.pages.product.detail', [
             'product' => $product,
         ]);
     }
+
     public function store(Request $request): ?RedirectResponse
     {
         try {
             $data = $request->input();
-
-            $data['slug'] = $this->normalizeSlug($data['slug'] ?? null, $data['name']);
-            $data['colors'] = $this->normalizeColors($data['colors'] ?? null);
             foreach (['image', 'image_detail_1', 'image_detail_2', 'image_detail_3'] as $field) {
                 if ($request->hasFile($field)) {
                     $data[$field] = $this->storeImage($request->file($field));
                 }
             }
-
             Product::create($data);
-
-            return redirect()->route('admin.product.showIndex')->with('success', 'Thêm sản phẩm thành công.');
+            return redirect()
+                ->route('admin.product.showIndex')
+                ->with('success', 'Thêm sản phẩm thành công.');
         } catch (ValidationException $e) {
             throw $e;
-        } catch (\Throwable $e) {
-            return back()->withInput()->with('error', 'Thêm sản phẩm thất bại.');
+        } catch (Throwable $e) {
+            return back()
+                ->withInput()
+                ->with('error', 'Thêm sản phẩm thất bại.');
         }
     }
 
@@ -86,22 +80,22 @@ class ProductController extends Controller
         try {
             $product = Product::findOrFail($id);
             $data = $request->input();
-            $data['slug'] = $this->normalizeSlug($data['slug'] ?? null, $data['name']);
-            $data['colors'] = $this->normalizeColors($data['colors'] ?? null);
             foreach (['image', 'image_detail_1', 'image_detail_2', 'image_detail_3'] as $field) {
                 if ($request->hasFile($field)) {
                     $this->deleteImageIfLocal($product->{$field} ?? null);
                     $data[$field] = $this->storeImage($request->file($field));
                 }
             }
-
             $product->update($data);
-
-            return redirect()->route('admin.product.showIndex')->with('success', 'Cập nhật sản phẩm thành công.');
+            return redirect()
+                ->route('admin.product.showIndex')
+                ->with('success', 'Cập nhật sản phẩm thành công.');
         } catch (ValidationException $e) {
             throw $e;
-        } catch (\Throwable $e) {
-            return back()->withInput()->with('error', 'Cập nhật sản phẩm thất bại.');
+        } catch (Throwable $e) {
+            return back()
+                ->withInput()
+                ->with('error', 'Cập nhật sản phẩm thất bại.');
         }
     }
 
@@ -109,22 +103,23 @@ class ProductController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
-
             foreach (['image', 'image_detail_1', 'image_detail_2', 'image_detail_3'] as $field) {
                 $this->deleteImageIfLocal($product->{$field} ?? null);
             }
-
             $product->delete();
-
-            return redirect()->route('admin.product.showIndex')->with('success', 'Xóa sản phẩm thành công.');
-        } catch (\Throwable $e) {
-            return redirect()->route('admin.product.showIndex')->with('error', 'Xóa sản phẩm thất bại.');
+            return redirect()
+                ->route('admin.product.showIndex')
+                ->with('success', 'Xóa sản phẩm thành công.');
+        } catch (Throwable $e) {
+            return redirect()
+                ->route('admin.product.showIndex')
+                ->with('error', 'Xóa sản phẩm thất bại.');
         }
     }
 
     private function normalizeSlug(?string $slug, string $name): string
     {
-        $slug = trim((string) $slug);
+        $slug = trim((string)$slug);
         return $slug !== '' ? Str::slug($slug) : Str::slug($name);
     }
 
@@ -132,15 +127,13 @@ class ProductController extends Controller
     {
         $ext = strtolower($file->getClientOriginalExtension() ?: 'png');
         $name = Str::random(20) . '.' . $ext;
-
         $path = $file->storeAs('products', $name, 'public');
-
         return '/storage/' . $path;
     }
 
     private function deleteImageIfLocal(?string $url): void
     {
-        $url = trim((string) $url);
+        $url = trim((string)$url);
         if ($url === '') {
             return;
         }
@@ -149,21 +142,5 @@ class ProductController extends Controller
             $relative = ltrim(str_replace('/storage/', '', $path), '/');
             Storage::disk('public')->delete($relative);
         }
-    }
-
-    private function normalizeColors(?string $colors): ?string
-    {
-        $colors = trim((string) $colors);
-        if ($colors === '') {
-            return null;
-        }
-        $arr = array_filter(array_map(function ($s) {
-            $s = strtoupper(trim($s));
-            $s = preg_replace('/\s+/', '', $s);
-            return $s ?: null;
-        }, explode(',', $colors)));
-        $arr = array_values(array_unique($arr));
-
-        return $arr ? implode(',', $arr) : null;
     }
 }

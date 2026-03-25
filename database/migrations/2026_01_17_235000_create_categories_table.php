@@ -11,10 +11,11 @@ return new class extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
             $table->id();
-            $table->string('code', 100);
-            $table->string('name', 100);
-            $table->text('sizes')->nullable();
+            $table->string('code', 100)->unique();
+            $table->string('name', 150);
+            $table->string('slug', 160)->unique();
             $table->text('description')->nullable();
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

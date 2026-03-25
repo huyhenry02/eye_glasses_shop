@@ -14,6 +14,7 @@ return new class extends Migration
             $table->bigInteger('invoice_id')->unsigned();
             $table->bigInteger('product_id')->unsigned();
             $table->string('size', 255)->nullable();
+            $table->string('color', 255)->nullable();
             $table->integer('quantity');
             $table->integer('total_price');
             $table->timestamps();

@@ -1,263 +1,439 @@
 @extends('customer.layouts.main')
 @section('content')
-    <div class="bg0 m-t-23 p-b-140">
-        <div class="container">
-            <div class="flex-w flex-sb-m p-b-52">
-                <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-                        Tất cả
-                    </button>
-
-                    @foreach($categories as $key => $category)
-                        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{ $category->code ?? '' }}">
-                            {{ $category->name ?? '' }}
-                        </button>
-                    @endforeach
-                </div>
-
-                <div class="flex-w flex-c-m m-tb-10">
-                    <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
-                        <i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
-                        <i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-                        Filter
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="container">
+                <div class="banner_content d-md-flex justify-content-between align-items-center">
+                    <div class="mb-3 mb-md-0">
+                        <h2>Shop Category</h2>
+                        <p>Very us move be blessed multiply night</p>
                     </div>
-
-                    <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-                        <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-                        <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-                        Search
-                    </div>
-                </div>
-
-                <!-- Search product -->
-                <div class="dis-none panel-search w-full p-t-10 p-b-15">
-                    <div class="bor8 dis-flex p-l-15">
-                        <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-                            <i class="zmdi zmdi-search"></i>
-                        </button>
-
-                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
-                    </div>
-                </div>
-
-                <!-- Filter -->
-                <div class="dis-none panel-filter w-full p-t-10">
-                    <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
-                        <div class="filter-col1 p-r-15 p-b-27">
-                            <div class="mtext-102 cl2 p-b-15">
-                                Sort By
-                            </div>
-
-                            <ul>
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Default
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Popularity
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Average rating
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-                                        Newness
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Price: Low to High
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Price: High to Low
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="filter-col2 p-r-15 p-b-27">
-                            <div class="mtext-102 cl2 p-b-15">
-                                Price
-                            </div>
-
-                            <ul>
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-                                        All
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        $0.00 - $50.00
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        $50.00 - $100.00
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        $100.00 - $150.00
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        $150.00 - $200.00
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        $200.00+
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="filter-col3 p-r-15 p-b-27">
-                            <div class="mtext-102 cl2 p-b-15">
-                                Color
-                            </div>
-
-                            <ul>
-                                <li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #222;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Black
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #4272d7;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-                                        Blue
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #b3b3b3;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Grey
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #00ad5f;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Green
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #fa4251;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        Red
-                                    </a>
-                                </li>
-
-                                <li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #aaa;">
-										<i class="zmdi zmdi-circle-o"></i>
-									</span>
-
-                                    <a href="#" class="filter-link stext-106 trans-04">
-                                        White
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="filter-col4 p-b-27">
-                            <div class="mtext-102 cl2 p-b-15">
-                                Tags
-                            </div>
-
-                            <div class="flex-w p-t-4 m-r--5">
-                                <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Fashion
-                                </a>
-
-                                <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Lifestyle
-                                </a>
-
-                                <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Denim
-                                </a>
-
-                                <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Streetstyle
-                                </a>
-
-                                <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                                    Crafts
-                                </a>
-                            </div>
-                        </div>
+                    <div class="page_link">
+                        <a href="index.html">Home</a>
+                        <a href="category.html">Shop</a>
+                        <a href="category.html">Women Fashion</a>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
 
-            <div class="row isotope-grid">
-                @foreach($products as $key => $product)
-                    <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{ $product->category->code ?? '' }}">
-                        <!-- Block2 -->
-                        <div class="block2">
-                            <div class="block2-pic hov-img0">
-                                <img src="{{ $product->image ?? '' }}" alt="IMG-PRODUCT">
+    <!--================Category Product Area =================-->
+    <section class="cat_product_area section_gap">
+        <div class="container">
+            <div class="row flex-row-reverse">
+                <div class="col-lg-9">
+                    <div class="product_top_bar">
+                        <div class="left_dorp">
+                            <select class="sorting">
+                                <option value="1">Default sorting</option>
+                                <option value="2">Default sorting 01</option>
+                                <option value="4">Default sorting 02</option>
+                            </select>
+                            <select class="show">
+                                <option value="1">Show 12</option>
+                                <option value="2">Show 14</option>
+                                <option value="4">Show 16</option>
+                            </select>
+                        </div>
+                    </div>
 
-                                <a href="{{ route('customer.showProductDetail', $product->id) }}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
-                                    Xem chi tiết
-                                </a>
+                    <div class="latest_product_inner">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <img
+                                            class="card-img"
+                                            src="/customer/img/product/inspired-product/i1.jpg"
+                                            alt=""
+                                        />
+                                        <div class="p_icon">
+                                            <a href="#">
+                                                <i class="ti-eye"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-shopping-cart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-btm">
+                                        <a href="#" class="d-block">
+                                            <h4>Latest men’s sneaker</h4>
+                                        </a>
+                                        <div class="mt-3">
+                                            <span class="mr-4">$25.00</span>
+                                            <del>$35.00</del>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l ">
-                                    <a href="{{ route('customer.showProductDetail', $product->id) }}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                        {{ $product->name ?? '' }}
-                                    </a>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <img
+                                            class="card-img"
+                                            src="/customer/img/product/inspired-product/i2.jpg"
+                                            alt=""
+                                        />
+                                        <div class="p_icon">
+                                            <a href="#">
+                                                <i class="ti-eye"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-shopping-cart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-btm">
+                                        <a href="#" class="d-block">
+                                            <h4>Latest men’s sneaker</h4>
+                                        </a>
+                                        <div class="mt-3">
+                                            <span class="mr-4">$25.00</span>
+                                            <del>$35.00</del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                    <span class="stext-105 cl3">
-									{{ number_format($product->discount_price ?? 0) }} VND
-								</span>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <img
+                                            class="card-img"
+                                            src="/customer/img/product/inspired-product/i3.jpg"
+                                            alt=""
+                                        />
+                                        <div class="p_icon">
+                                            <a href="#">
+                                                <i class="ti-eye"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-shopping-cart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-btm">
+                                        <a href="#" class="d-block">
+                                            <h4>Latest men’s sneaker</h4>
+                                        </a>
+                                        <div class="mt-3">
+                                            <span class="mr-4">$25.00</span>
+                                            <del>$35.00</del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <img
+                                            class="card-img"
+                                            src="/customer/img/product/inspired-product/i4.jpg"
+                                            alt=""
+                                        />
+                                        <div class="p_icon">
+                                            <a href="#">
+                                                <i class="ti-eye"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-shopping-cart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-btm">
+                                        <a href="#" class="d-block">
+                                            <h4>Latest men’s sneaker</h4>
+                                        </a>
+                                        <div class="mt-3">
+                                            <span class="mr-4">$25.00</span>
+                                            <del>$35.00</del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <img
+                                            class="card-img"
+                                            src="/customer/img/product/inspired-product/i5.jpg"
+                                            alt=""
+                                        />
+                                        <div class="p_icon">
+                                            <a href="#">
+                                                <i class="ti-eye"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-shopping-cart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-btm">
+                                        <a href="#" class="d-block">
+                                            <h4>Latest men’s sneaker</h4>
+                                        </a>
+                                        <div class="mt-3">
+                                            <span class="mr-4">$25.00</span>
+                                            <del>$35.00</del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <img
+                                            class="card-img"
+                                            src="/customer/img/product/inspired-product/i6.jpg"
+                                            alt=""
+                                        />
+                                        <div class="p_icon">
+                                            <a href="#">
+                                                <i class="ti-eye"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-shopping-cart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-btm">
+                                        <a href="#" class="d-block">
+                                            <h4>Latest men’s sneaker</h4>
+                                        </a>
+                                        <div class="mt-3">
+                                            <span class="mr-4">$25.00</span>
+                                            <del>$35.00</del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <img
+                                            class="card-img"
+                                            src="/customer/img/product/inspired-product/i7.jpg"
+                                            alt=""
+                                        />
+                                        <div class="p_icon">
+                                            <a href="#">
+                                                <i class="ti-eye"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-shopping-cart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-btm">
+                                        <a href="#" class="d-block">
+                                            <h4>Latest men’s sneaker</h4>
+                                        </a>
+                                        <div class="mt-3">
+                                            <span class="mr-4">$25.00</span>
+                                            <del>$35.00</del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <img
+                                            class="card-img"
+                                            src="/customer/img/product/inspired-product/i8.jpg"
+                                            alt=""
+                                        />
+                                        <div class="p_icon">
+                                            <a href="#">
+                                                <i class="ti-eye"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-shopping-cart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-btm">
+                                        <a href="#" class="d-block">
+                                            <h4>Latest men’s sneaker</h4>
+                                        </a>
+                                        <div class="mt-3">
+                                            <span class="mr-4">$25.00</span>
+                                            <del>$35.00</del>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <div class="product-img">
+                                        <img
+                                            class="card-img"
+                                            src="/customer/img/product/inspired-product/i2.jpg"
+                                            alt=""
+                                        />
+                                        <div class="p_icon">
+                                            <a href="#">
+                                                <i class="ti-eye"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                            <a href="#">
+                                                <i class="ti-shopping-cart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-btm">
+                                        <a href="#" class="d-block">
+                                            <h4>Latest men’s sneaker</h4>
+                                        </a>
+                                        <div class="mt-3">
+                                            <span class="mr-4">$25.00</span>
+                                            <del>$35.00</del>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="left_sidebar_area">
+                        <aside class="left_widgets p_filter_widgets">
+                            <div class="l_w_title">
+                                <h3>Browse Categories</h3>
+                            </div>
+                            <div class="widgets_inner">
+                                <ul class="list">
+                                    <li>
+                                        <a href="#">Frozen Fish</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Dried Fish</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Fresh Fish</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Meat Alternatives</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Fresh Fish</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Meat Alternatives</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Meat</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+
+                        <aside class="left_widgets p_filter_widgets">
+                            <div class="l_w_title">
+                                <h3>Product Brand</h3>
+                            </div>
+                            <div class="widgets_inner">
+                                <ul class="list">
+                                    <li>
+                                        <a href="#">Apple</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Asus</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="#">Gionee</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Micromax</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Samsung</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+
+                        <aside class="left_widgets p_filter_widgets">
+                            <div class="l_w_title">
+                                <h3>Color Filter</h3>
+                            </div>
+                            <div class="widgets_inner">
+                                <ul class="list">
+                                    <li>
+                                        <a href="#">Black</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Black Leather</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="#">Black with red</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Gold</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Spacegrey</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+
+                        <aside class="left_widgets p_filter_widgets">
+                            <div class="l_w_title">
+                                <h3>Price Filter</h3>
+                            </div>
+                            <div class="widgets_inner">
+                                <div class="range_item">
+                                    <div id="slider-range"></div>
+                                    <div class="">
+                                        <label for="amount">Price : </label>
+                                        <input type="text" id="amount" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!--================End Category Product Area =================-->
 @endsection

@@ -27,11 +27,11 @@ class CheckoutController extends Controller
 
     protected function getProductPrice($product): int
     {
-        if (!empty($product->discount_price) && (int) $product->discount_price > 0) {
-            return (int) $product->discount_price;
+        if (!empty($product->discount_price) && (int)$product->discount_price > 0) {
+            return (int)$product->discount_price;
         }
 
-        return (int) ($product->price ?? 0);
+        return (int)($product->price ?? 0);
     }
 
     /**
@@ -62,7 +62,7 @@ class CheckoutController extends Controller
 
         $subtotal = $cartItems->sum(function ($item) {
             $price = $this->getProductPrice($item->product);
-            return $price * (int) $item->quantity;
+            return $price * (int)$item->quantity;
         });
 
         return view('customer.pages.cart', compact('cartItems', 'subtotal'));
@@ -85,15 +85,15 @@ class CheckoutController extends Controller
             ->first();
 
         if ($cart) {
-            $cart->quantity = (int) $cart->quantity + (int) $request->quantity;
+            $cart->quantity = (int)$cart->quantity + (int)$request->quantity;
             $cart->save();
         } else {
             Cart::create([
                 'customer_id' => $customerId,
-                'product_id'  => $product->id,
-                'size'        => $request->size,
-                'color'       => $request->color,
-                'quantity'    => $request->quantity,
+                'product_id' => $product->id,
+                'size' => $request->size,
+                'color' => $request->color,
+                'quantity' => $request->quantity,
             ]);
         }
 
@@ -154,7 +154,7 @@ class CheckoutController extends Controller
 
         $subtotal = $cartItems->sum(function ($item) {
             $price = $this->getProductPrice($item->product);
-            return $price * (int) $item->quantity;
+            return $price * (int)$item->quantity;
         });
 
         return view('customer.pages.checkout', compact('cartItems', 'subtotal'));
@@ -181,20 +181,20 @@ class CheckoutController extends Controller
         try {
             $totalAmount = $cartItems->sum(function ($item) {
                 $price = $this->getProductPrice($item->product);
-                return $price * (int) $item->quantity;
+                return $price * (int)$item->quantity;
             });
             $paymentMethod = $request->input('payment_method', 'cod');
             if ($paymentMethod === 'cod') {
                 $order = Order::create([
-                    'customer_id'      => $customerId,
-                    'order_code'       => $this->generateOrderCode(),
-                    'total_amount'     => $totalAmount,
-                    'status'           => 'pending',
-                    'payment_status'   => $request->payment_method === 'cod' ? 'unpaid' : 'pending',
-                    'payment_method'   => $request->payment_method,
-                    'shipping_name'    => $request->shipping_name,
-                    'shipping_phone'   => $request->shipping_phone,
-                    'shipping_email'   => $request->shipping_email,
+                    'customer_id' => $customerId,
+                    'order_code' => $this->generateOrderCode(),
+                    'total_amount' => $totalAmount,
+                    'status' => 'pending',
+                    'payment_status' => $request->payment_method === 'cod' ? 'unpaid' : 'pending',
+                    'payment_method' => $request->payment_method,
+                    'shipping_name' => $request->shipping_name,
+                    'shipping_phone' => $request->shipping_phone,
+                    'shipping_email' => $request->shipping_email,
                     'shipping_address' => $request->shipping_address,
                 ]);
 
@@ -202,12 +202,12 @@ class CheckoutController extends Controller
                     $price = $this->getProductPrice($item->product);
 
                     OrderDetail::create([
-                        'order_id'    => $order->id,
-                        'product_id'  => $item->product_id,
-                        'size'        => $item->size,
-                        'color'       => $item->color,
-                        'quantity'    => $item->quantity,
-                        'total_price' => $price * (int) $item->quantity,
+                        'order_id' => $order->id,
+                        'product_id' => $item->product_id,
+                        'size' => $item->size,
+                        'color' => $item->color,
+                        'quantity' => $item->quantity,
+                        'total_price' => $price * (int)$item->quantity,
                     ]);
                 }
                 Cart::where('customer_id', $customerId)->delete();
@@ -224,9 +224,9 @@ class CheckoutController extends Controller
                     'status' => Order::STATUS_PROCESSING,
                     'payment_status' => Order::PAYMENT_STATUS_PAID,
                     'payment_method' => $paymentMethod,
-                    'shipping_name'    => $request->shipping_name,
-                    'shipping_phone'   => $request->shipping_phone,
-                    'shipping_email'   => $request->shipping_email,
+                    'shipping_name' => $request->shipping_name,
+                    'shipping_phone' => $request->shipping_phone,
+                    'shipping_email' => $request->shipping_email,
                     'shipping_address' => $request->shipping_address,
                     'cart' => $cartItems->toArray(),
                 ]

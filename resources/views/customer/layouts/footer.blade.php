@@ -1,153 +1,69 @@
-<footer class="bg3 p-t-75 p-b-32">
+<footer class="footer-area section_gap">
     <div class="container">
         <div class="row">
-
-            <div class="col-sm-6 col-lg-3 p-b-50">
-                <h4 class="stext-301 cl0 p-b-30">
-                    Danh mục
-                </h4>
-
+            <div class="col-lg-2 col-md-6 single-footer-widget">
+                <h4>Top Products</h4>
                 <ul>
-                    <li class="p-b-10">
-                        <a href="{{ route('customer.showProducts') }}" class="stext-107 cl7 hov-cl1 trans-04">
-                            Thời trang nữ
-                        </a>
-                    </li>
-
-                    <li class="p-b-10">
-                        <a href="{{ route('customer.showProducts') }}" class="stext-107 cl7 hov-cl1 trans-04">
-                            Thời trang nam
-                        </a>
-                    </li>
-
-                    <li class="p-b-10">
-                        <a href="{{ route('customer.showProducts') }}" class="stext-107 cl7 hov-cl1 trans-04">
-                            Giày dép
-                        </a>
-                    </li>
-
-                    <li class="p-b-10">
-                        <a href="{{ route('customer.showProducts') }}" class="stext-107 cl7 hov-cl1 trans-04">
-                            Phụ kiện
-                        </a>
-                    </li>
+                    <li><a href="#">Managed Website</a></li>
+                    <li><a href="#">Manage Reputation</a></li>
+                    <li><a href="#">Power Tools</a></li>
+                    <li><a href="#">Marketing Service</a></li>
                 </ul>
             </div>
-
-
-            <div class="col-sm-6 col-lg-3 p-b-50">
-                <h4 class="stext-301 cl0 p-b-30">
-                    Hỗ trợ
-                </h4>
-
+            <div class="col-lg-2 col-md-6 single-footer-widget">
+                <h4>Quick Links</h4>
                 <ul>
-                    @auth
-                        <li class="p-b-10">
-                            <a href="{{ route('customer.orders.index') }}" class="stext-107 cl7 hov-cl1 trans-04">
-                                Đơn hàng của tôi
-                            </a>
-                        </li>
-                    @endauth
-
-                    @guest
-                        <li class="p-b-10">
-                            <a href="{{ route('auth.showLogin') }}" class="stext-107 cl7 hov-cl1 trans-04">
-                                Đăng nhập
-                            </a>
-                        </li>
-
-                        <li class="p-b-10">
-                            <a href="{{ route('auth.showRegister') }}" class="stext-107 cl7 hov-cl1 trans-04">
-                                Đăng ký
-                            </a>
-                        </li>
-                    @endguest
-
-                    <li class="p-b-10">
-                        <a href="{{ route('customer.showProducts') }}" class="stext-107 cl7 hov-cl1 trans-04">
-                            Mua sắm
-                        </a>
-                    </li>
-
-                    <li class="p-b-10">
-                        <a href="{{ route('customer.showIndex') }}" class="stext-107 cl7 hov-cl1 trans-04">
-                            Trang chủ
-                        </a>
-                    </li>
+                    <li><a href="#">Jobs</a></li>
+                    <li><a href="#">Brand Assets</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                    <li><a href="#">Terms of Service</a></li>
                 </ul>
             </div>
+            <div class="col-lg-2 col-md-6 single-footer-widget">
+                <h4>Features</h4>
+                <ul>
+                    <li><a href="#">Jobs</a></li>
+                    <li><a href="#">Brand Assets</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6 single-footer-widget">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Guides</a></li>
+                    <li><a href="#">Research</a></li>
+                    <li><a href="#">Experts</a></li>
+                    <li><a href="#">Agencies</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-6 single-footer-widget">
+                <h4>Newsletter</h4>
+                <p>You can trust us. we only send promo offers,</p>
+                <div class="form-wrap" id="mc_embed_signup">
+                    <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                          method="get" class="form-inline">
+                        <input class="form-control" name="EMAIL" placeholder="Your Email Address" onfocus="this.placeholder = ''"
+                               onblur="this.placeholder = 'Your Email Address '" required="" type="email">
+                        <button class="click-btn btn btn-default">Subscribe</button>
+                        <div style="position: absolute; left: -5000px;">
+                            <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+                        </div>
 
-
-            <div class="col-sm-6 col-lg-3 p-b-50">
-                <h4 class="stext-301 cl0 p-b-30">
-                    Liên hệ
-                </h4>
-
-                <p class="stext-107 cl7 size-201">
-                    Nếu bạn cần hỗ trợ về sản phẩm, đơn hàng hoặc tài khoản, vui lòng liên hệ với chúng tôi để được tư vấn nhanh chóng.
-                </p>
-
-                <div class="p-t-27">
-                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16" title="Facebook">
-                        <i class="fa fa-facebook"></i>
-                    </a>
-
-                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16" title="Instagram">
-                        <i class="fa fa-instagram"></i>
-                    </a>
-
-                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16" title="Pinterest">
-                        <i class="fa fa-pinterest-p"></i>
-                    </a>
+                        <div class="info"></div>
+                    </form>
                 </div>
             </div>
-
-
-            <div class="col-sm-6 col-lg-3 p-b-50">
-                <h4 class="stext-301 cl0 p-b-30">
-                    Nhận tin khuyến mãi
-                </h4>
-
-                <form>
-                    <div class="wrap-input1 w-full p-b-4">
-                        <input class="input1 bg-none plh1 stext-107 cl7"
-                               type="text"
-                               name="email"
-                               placeholder="Nhập email của bạn">
-                        <div class="focus-input1 trans-04"></div>
-                    </div>
-
-                    <div class="p-t-18">
-                        <button type="submit" class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-                            Đăng ký nhận tin
-                        </button>
-                    </div>
-                </form>
-            </div>
-
         </div>
-
-        <div class="p-t-40">
-            <div class="flex-c-m flex-w p-b-18">
-                <a href="javascript:void(0)" class="m-all-1">
-                    <img src="/customer/images/icons/icon-pay-01.png" alt="ICON-PAY">
-                </a>
-
-                <a href="javascript:void(0)" class="m-all-1">
-                    <img src="/customer/images/icons/icon-pay-02.png" alt="ICON-PAY">
-                </a>
-
-                <a href="javascript:void(0)" class="m-all-1">
-                    <img src="/customer/images/icons/icon-pay-03.png" alt="ICON-PAY">
-                </a>
-
-                <a href="javascript:void(0)" class="m-all-1">
-                    <img src="/customer/images/icons/icon-pay-04.png" alt="ICON-PAY">
-                </a>
-
-                <a href="javascript:void(0)" class="m-all-1">
-                    <img src="/customer/images/icons/icon-pay-05.png" alt="ICON-PAY">
-                </a>
+        <div class="footer-bottom row align-items-center">
+            <p class="footer-text m-0 col-lg-8 col-md-12"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            <div class="col-lg-4 col-md-12 footer-social">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+                <a href="#"><i class="fa fa-behance"></i></a>
             </div>
         </div>
     </div>

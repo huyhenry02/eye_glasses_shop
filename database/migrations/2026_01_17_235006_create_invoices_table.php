@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('payment_method');
             $table->string('payment_status')->default('paid');
             $table->dateTime('payment_time')->nullable();
+            $table->string('payment_transaction_id', 255)->nullable();
+            $table->string('payment_bank_code', 255)->nullable();
+            $table->string('payment_response_code', 255)->nullable();
+            $table->string('payment_secure_hash', 255)->nullable();
             $table->bigInteger('employee_id')->unsigned()->nullable();
             $table->timestamps();
             $table->unique('invoice_code', 'invoices_invoice_code_unique');

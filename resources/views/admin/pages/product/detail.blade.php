@@ -11,19 +11,32 @@
         $description = $product->description ?? '—';
 
         $price = isset($product->price) ? number_format($product->price, 0, ',', '.') . 'đ' : '—';
-        $discountPrice = isset($product->discount_price) ? number_format($product->discount_price, 0, ',', '.') . 'đ' : '—';
+        $discountPrice = !empty($product->discount_price) ? number_format($product->discount_price, 0, ',', '.') . 'đ' : null;
         $stock = isset($product->stock_quantity) ? (int)$product->stock_quantity : 0;
 
-        $color = $product->color ?: '—';
-        $material = $product->material ?: '—';
-        $style = $product->style ?: '—';
-
         $isActive = (int)($product->is_active ?? 1) === 1;
+        $isFeatured = (int)($product->is_featured ?? 0) === 1;
 
         $image = $product->image ?? '';
         $img1 = $product->image_detail_1 ?? '';
         $img2 = $product->image_detail_2 ?? '';
         $img3 = $product->image_detail_3 ?? '';
+
+        $specs = [
+            'Thương hiệu' => $product->brand ?? null,
+            'Giới tính' => $product->gender ?? null,
+            'Chất liệu gọng' => $product->frame_material ?? null,
+            'Chất liệu tròng' => $product->lens_material ?? null,
+            'Dáng kính' => $product->shape ?? null,
+            'Kiểu viền' => $product->rim_type ?? null,
+            'Màu gọng' => $product->frame_color ?? null,
+            'Màu tròng' => $product->lens_color ?? null,
+            'Các màu khác' => $product->colors ?? null,
+            'Rộng tròng' => !empty($product->lens_width) ? $product->lens_width . ' mm' : null,
+            'Cầu kính' => !empty($product->bridge_width) ? $product->bridge_width . ' mm' : null,
+            'Dài càng' => !empty($product->temple_length) ? $product->temple_length . ' mm' : null,
+            'Ngang gọng' => !empty($product->frame_width) ? $product->frame_width . ' mm' : null,
+        ];
     @endphp
 
     <div class="page-header">
@@ -41,11 +54,11 @@
         <div class="page-header-right ms-auto">
             <div class="page-header-right-items">
                 <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                    <a href="#" class="btn btn-light">
+                    <a href="{{ route('admin.product.showIndex') }}" class="btn btn-light">
                         <i class="feather-arrow-left me-2"></i>
                         <span>Quay lại</span>
                     </a>
-                    <a href="#" class="btn btn-primary">
+                    <a href="{{ route('admin.product.showEdit', $product->id) }}" class="btn btn-primary">
                         <i class="feather-edit-3 me-2"></i>
                         <span>Chỉnh sửa</span>
                     </a>
@@ -60,7 +73,6 @@
                 <div class="card border-top-0">
                     <div class="card-body">
                         <div class="row">
-                            {{-- LEFT: Thông tin cơ bản --}}
                             <div class="col-lg-8">
                                 <div class="d-flex align-items-start justify-content-between mb-3">
                                     <div>
@@ -78,10 +90,17 @@
                                         </div>
                                     </div>
 
-                                    <span class="badge {{ $isActive ? 'bg-soft-success text-success' : 'bg-soft-secondary text-secondary' }}"
-                                          style="font-weight:700;">
-                                        {{ $isActive ? 'Đang bán' : 'Tạm ẩn' }}
-                                    </span>
+                                    <div class="d-flex flex-column align-items-end gap-2">
+                                        <span class="badge {{ $isActive ? 'bg-soft-success text-success' : 'bg-soft-secondary text-secondary' }}"
+                                              style="font-weight:700;">
+                                            {{ $isActive ? 'Đang bán' : 'Tạm ẩn' }}
+                                        </span>
+                                        @if($isFeatured)
+                                            <span class="badge bg-soft-warning text-warning" style="font-weight:700;">
+                                                Nổi bật
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <div class="row g-3">
@@ -130,7 +149,7 @@
                                         <div class="info-box">
                                             <div class="label">Giá khuyến mãi</div>
                                             <div class="value">
-                                                @if($discountPrice !== '—')
+                                                @if($discountPrice)
                                                     <span class="fw-semibold text-success">{{ $discountPrice }}</span>
                                                 @else
                                                     <span class="text-muted">—</span>
@@ -151,16 +170,16 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="info-box">
-                                            <div class="label">Thuộc tính</div>
-                                            <div class="value d-flex flex-wrap gap-2">
-                                                <span class="badge bg-soft-secondary text-secondary">{{ $color }}</span>
-                                                <span class="badge bg-soft-secondary text-secondary">{{ $material }}</span>
-                                                <span class="badge bg-soft-secondary text-secondary">{{ $style }}</span>
+                                    @foreach($specs as $label => $value)
+                                        @if(!empty($value))
+                                            <div class="col-md-6">
+                                                <div class="info-box">
+                                                    <div class="label">{{ $label }}</div>
+                                                    <div class="value">{{ $value }}</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        @endif
+                                    @endforeach
 
                                     <div class="col-md-12">
                                         <div class="info-box">
@@ -173,7 +192,6 @@
                                 </div>
                             </div>
 
-                            {{-- RIGHT: Hình ảnh --}}
                             <div class="col-lg-4">
                                 <h6 class="fw-bold mb-3">Hình ảnh</h6>
 
@@ -188,9 +206,7 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="text-muted mt-2" style="font-size: 13px;">
-                                        Ảnh chính
-                                    </div>
+                                    <div class="text-muted mt-2" style="font-size: 13px;">Ảnh chính</div>
                                 </div>
 
                                 <div class="row g-3">
@@ -236,16 +252,15 @@
                                         <div class="text-muted mt-2" style="font-size: 13px;">Ảnh chi tiết 3</div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
                         <div class="d-flex justify-content-end gap-2 mt-4">
-                            <a href="#" class="btn btn-light">
+                            <a href="{{ route('admin.product.showIndex') }}" class="btn btn-light">
                                 <i class="feather-arrow-left me-2"></i>
                                 Quay lại
                             </a>
-                            <a href="#" class="btn btn-primary">
+                            <a href="{{ route('admin.product.showEdit', $product->id) }}" class="btn btn-primary">
                                 <i class="feather-edit-3 me-2"></i>
                                 Chỉnh sửa
                             </a>
@@ -263,7 +278,6 @@
                                 color: #6c757d;
                                 margin-bottom: 6px;
                                 font-weight: 600;
-                                text-transform: none;
                             }
                             .info-box .value{
                                 font-size: 14.5px;
@@ -304,7 +318,6 @@
                                 font-size: 20px;
                             }
                         </style>
-
                     </div>
                 </div>
             </div>

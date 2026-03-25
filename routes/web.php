@@ -28,6 +28,8 @@ Route::prefix('customer')
     ->group(function () {
         Route::get('/index', [ShopController::class, 'showIndex'])->name('showIndex');
         Route::get('/contact', [ShopController::class, 'showContact'])->name('showContact');
+        Route::get('/blogs', [ShopController::class, 'showBlog'])->name('showBlog');
+        Route::get('/blog', [ShopController::class, 'showBlogDetail'])->name('showBlogDetail');
         Route::get('/products', [ShopController::class, 'showProducts'])->name('showProducts');
         Route::get('/product/{product}', [ShopController::class, 'showProductDetail'])->name('showProductDetail');
 

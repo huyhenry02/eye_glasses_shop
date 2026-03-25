@@ -1,342 +1,712 @@
 @extends('customer.layouts.main')
 @section('content')
-    <!-- breadcrumb -->
-    <div class="container">
-        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-            <a href="{{ route('customer.showIndex') }}" class="stext-109 cl8 hov-cl1 trans-04">
-                Trang chủ
-                <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-            </a>
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="container">
+                <div
+                    class="banner_content d-md-flex justify-content-between align-items-center"
+                >
+                    <div class="mb-3 mb-md-0">
+                        <h2>Product Details</h2>
+                        <p>Very us move be blessed multiply night</p>
+                    </div>
+                    <div class="page_link">
+                        <a href="index.html">Home</a>
+                        <a href="single-product.html">Product Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
 
-            <a href="{{ route('customer.showProducts') }}" class="stext-109 cl8 hov-cl1 trans-04">
-                {{ $product->category->name ?? '' }}
-                <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-            </a>
-
-            <span class="stext-109 cl4">
-				{{ $product->name ?? '' }}
-			</span>
+    <!--================Single Product Area =================-->
+    <div class="product_image_area">
+        <div class="container">
+            <div class="row s_product_inner">
+                <div class="col-lg-6">
+                    <div class="s_product_img">
+                        <div
+                            id="carouselExampleIndicators"
+                            class="carousel slide"
+                            data-ride="carousel"
+                        >
+                            <ol class="carousel-indicators">
+                                <li
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide-to="0"
+                                    class="active"
+                                >
+                                    <img
+                                        src="/customer/img/product/single-product/s-product-s-2.jpg"
+                                        alt=""
+                                    />
+                                </li>
+                                <li
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide-to="1"
+                                >
+                                    <img
+                                        src="/customer/img/product/single-product/s-product-s-3.jpg"
+                                        alt=""
+                                    />
+                                </li>
+                                <li
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide-to="2"
+                                >
+                                    <img
+                                        src="/customer/img/product/single-product/s-product-s-4.jpg"
+                                        alt=""
+                                    />
+                                </li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img
+                                        class="d-block w-100"
+                                        src="/customer/img/product/single-product/s-product-1.jpg"
+                                        alt="First slide"
+                                    />
+                                </div>
+                                <div class="carousel-item">
+                                    <img
+                                        class="d-block w-100"
+                                        src="/customer/img/product/single-product/s-product-1.jpg"
+                                        alt="Second slide"
+                                    />
+                                </div>
+                                <div class="carousel-item">
+                                    <img
+                                        class="d-block w-100"
+                                        src="/customer/img/product/single-product/s-product-1.jpg"
+                                        alt="Third slide"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 offset-lg-1">
+                    <div class="s_product_text">
+                        <h3>Faded SkyBlu Denim Jeans</h3>
+                        <h2>$149.99</h2>
+                        <ul class="list">
+                            <li>
+                                <a class="active" href="#">
+                                    <span>Category</span> : Household</a
+                                >
+                            </li>
+                            <li>
+                                <a href="#"> <span>Availibility</span> : In Stock</a>
+                            </li>
+                        </ul>
+                        <p>
+                            Mill Oil is an innovative oil filled radiator with the most
+                            modern technology. If you are looking for something that can
+                            make your interior look awesome, and at the same time give you
+                            the pleasant warm feeling during the winter.
+                        </p>
+                        <div class="product_count">
+                            <label for="qty">Quantity:</label>
+                            <input
+                                type="text"
+                                name="qty"
+                                id="sst"
+                                maxlength="12"
+                                value="1"
+                                title="Quantity:"
+                                class="input-text qty"
+                            />
+                            <button
+                                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                class="increase items-count"
+                                type="button"
+                            >
+                                <i class="lnr lnr-chevron-up"></i>
+                            </button>
+                            <button
+                                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                class="reduced items-count"
+                                type="button"
+                            >
+                                <i class="lnr lnr-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="card_area">
+                            <a class="main_btn" href="#">Add to Cart</a>
+                            <a class="icon_btn" href="#">
+                                <i class="lnr lnr lnr-diamond"></i>
+                            </a>
+                            <a class="icon_btn" href="#">
+                                <i class="lnr lnr lnr-heart"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <!--================End Single Product Area =================-->
 
-    <section class="sec-product-detail bg0 p-t-65 p-b-60">
+    <!--================Product Description Area =================-->
+    <section class="product_description_area">
         <div class="container">
-
-            @if(session('success'))
-                <div class="alert alert-success m-b-20">
-                    {{ session('success') }}
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        id="home-tab"
+                        data-toggle="tab"
+                        href="#home"
+                        role="tab"
+                        aria-controls="home"
+                        aria-selected="true"
+                    >Description</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        id="profile-tab"
+                        data-toggle="tab"
+                        href="#profile"
+                        role="tab"
+                        aria-controls="profile"
+                        aria-selected="false"
+                    >Specification</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        id="contact-tab"
+                        data-toggle="tab"
+                        href="#contact"
+                        role="tab"
+                        aria-controls="contact"
+                        aria-selected="false"
+                    >Comments</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a
+                        class="nav-link active"
+                        id="review-tab"
+                        data-toggle="tab"
+                        href="#review"
+                        role="tab"
+                        aria-controls="review"
+                        aria-selected="false"
+                    >Reviews</a
+                    >
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div
+                    class="tab-pane fade"
+                    id="home"
+                    role="tabpanel"
+                    aria-labelledby="home-tab"
+                >
+                    <p>
+                        Beryl Cook is one of Britain’s most talented and amusing artists
+                        .Beryl’s pictures feature women of all shapes and sizes enjoying
+                        themselves .Born between the two world wars, Beryl Cook eventually
+                        left Kendrick School in Reading at the age of 15, where she went
+                        to secretarial school and then into an insurance office. After
+                        moving to London and then Hampton, she eventually married her next
+                        door neighbour from Reading, John Cook. He was an officer in the
+                        Merchant Navy and after he left the sea in 1956, they bought a pub
+                        for a year before John took a job in Southern Rhodesia with a
+                        motor company. Beryl bought their young son a box of watercolours,
+                        and when showing him how to use it, she decided that she herself
+                        quite enjoyed painting. John subsequently bought her a child’s
+                        painting set for her birthday and it was with this that she
+                        produced her first significant work, a half-length portrait of a
+                        dark-skinned lady with a vacant expression and large drooping
+                        breasts. It was aptly named ‘Hangover’ by Beryl’s husband and
+                    </p>
+                    <p>
+                        It is often frustrating to attempt to plan meals that are designed
+                        for one. Despite this fact, we are seeing more and more recipe
+                        books and Internet websites that are dedicated to the act of
+                        cooking for one. Divorce and the death of spouses or grown
+                        children leaving for college are all reasons that someone
+                        accustomed to cooking for more than one would suddenly need to
+                        learn how to adjust all the cooking practices utilized before into
+                        a streamlined plan of cooking that is more efficient for one
+                        person creating less
+                    </p>
                 </div>
-            @endif
-
-            @if(session('error'))
-                <div class="alert alert-danger m-b-20">
-                    {{ session('error') }}
-                </div>
-            @endif
-
-            <div class="row">
-                <div class="col-md-6 col-lg-7 p-b-30">
-                    <div class="p-l-25 p-r-30 p-lr-0-lg">
-                        <div class="wrap-slick3 flex-sb flex-w">
-                            <div class="wrap-slick3-dots"></div>
-                            <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-
-                            <div class="slick3 gallery-lb">
-                                @if(!empty($product->image_detail_1))
-                                    <div class="item-slick3" data-thumb="{{ $product->image_detail_1 }}">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="{{ $product->image_detail_1 }}" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                               href="{{ $product->image_detail_1 }}">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                @endif
-
-                                @if(!empty($product->image_detail_2))
-                                    <div class="item-slick3" data-thumb="{{ $product->image_detail_2 }}">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="{{ $product->image_detail_2 }}" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                               href="{{ $product->image_detail_2 }}">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                @endif
-
-                                @if(!empty($product->image_detail_3))
-                                    <div class="item-slick3" data-thumb="{{ $product->image_detail_3 }}">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="{{ $product->image_detail_3 }}" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                               href="{{ $product->image_detail_3 }}">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                @endif
-
-                                @if(empty($product->image_detail_1) && empty($product->image_detail_2) && empty($product->image_detail_3))
-                                    <div class="item-slick3" data-thumb="/customer/images/product-detail-01.jpg">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="/customer/images/product-detail-01.jpg" alt="IMG-PRODUCT">
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
+                <div
+                    class="tab-pane fade"
+                    id="profile"
+                    role="tabpanel"
+                    aria-labelledby="profile-tab"
+                >
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <h5>Width</h5>
+                                </td>
+                                <td>
+                                    <h5>128mm</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Height</h5>
+                                </td>
+                                <td>
+                                    <h5>508mm</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Depth</h5>
+                                </td>
+                                <td>
+                                    <h5>85mm</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Weight</h5>
+                                </td>
+                                <td>
+                                    <h5>52gm</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Quality checking</h5>
+                                </td>
+                                <td>
+                                    <h5>yes</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Freshness Duration</h5>
+                                </td>
+                                <td>
+                                    <h5>03days</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>When packeting</h5>
+                                </td>
+                                <td>
+                                    <h5>Without touch of hand</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Each Box contains</h5>
+                                </td>
+                                <td>
+                                    <h5>60pcs</h5>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-                <div class="col-md-6 col-lg-5 p-b-30">
-                    <div class="p-r-50 p-t-5 p-lr-0-lg">
-                        <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                            {{ $product->name ?? '' }}
-                        </h4>
-
-                        @php
-                            $finalPrice = (!empty($product->discount_price) && (int)$product->discount_price > 0)
-                                ? (int)$product->discount_price
-                                : (int)($product->price ?? 0);
-                        @endphp
-
-                        <span class="mtext-106 cl2">
-							{{ number_format($finalPrice, 0, ',', '.') }} VND
-						</span>
-
-                        <p class="stext-102 cl3 p-t-23">
-                            {{ $product->description ?? '' }}
-                        </p>
-
-                        <form action="{{ route('customer.cart.add') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-
-                            <div class="p-t-33">
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Size
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="size" required>
-                                                <option value="">Chọn size</option>
-                                                @foreach($product->sizeArray as $size)
-                                                    <option
-                                                        value="{{ $size }}" {{ old('size') == $size ? 'selected' : '' }}>
-                                                        {{ $size }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
+                <div
+                    class="tab-pane fade"
+                    id="contact"
+                    role="tabpanel"
+                    aria-labelledby="contact-tab"
+                >
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="comment_list">
+                                <div class="review_item">
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img
+                                                src="/customer/img/product/single-product/review-1.png"
+                                                alt=""
+                                            />
                                         </div>
-                                        @error('size')
-                                        <small class="text-danger d-block m-t-5">{{ $message }}</small>
-                                        @enderror
+                                        <div class="media-body">
+                                            <h4>Blake Ruiz</h4>
+                                            <h5>12th Feb, 2017 at 05:56 pm</h5>
+                                            <a class="reply_btn" href="#">Reply</a>
+                                        </div>
                                     </div>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                        sed do eiusmod tempor incididunt ut labore et dolore magna
+                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                        ullamco laboris nisi ut aliquip ex ea commodo
+                                    </p>
                                 </div>
-
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-203 flex-c-m respon6">
-                                        Màu
-                                    </div>
-
-                                    <div class="size-204 respon6-next">
-                                        <div class="rs1-select2 bor8 bg0">
-                                            <select class="js-select2" name="color" required>
-                                                <option value="">Chọn màu</option>
-                                                @foreach($product->colorArray as $color)
-                                                    <option
-                                                        value="{{ $color }}" {{ old('color') == $color ? 'selected' : '' }}>
-                                                        {{ $color }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
+                                <div class="review_item reply">
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img
+                                                src="/customer/img/product/single-product/review-2.png"
+                                                alt=""
+                                            />
                                         </div>
-                                        @error('color')
-                                        <small class="text-danger d-block m-t-5">{{ $message }}</small>
-                                        @enderror
+                                        <div class="media-body">
+                                            <h4>Blake Ruiz</h4>
+                                            <h5>12th Feb, 2017 at 05:56 pm</h5>
+                                            <a class="reply_btn" href="#">Reply</a>
+                                        </div>
                                     </div>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                        sed do eiusmod tempor incididunt ut labore et dolore magna
+                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                        ullamco laboris nisi ut aliquip ex ea commodo
+                                    </p>
                                 </div>
-
-                                <div class="flex-w flex-r-m p-b-10">
-                                    <div class="size-204 flex-w flex-m respon6-next">
-                                        <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-minus"></i>
-                                            </div>
-
-                                            <input class="mtext-104 cl3 txt-center num-product"
-                                                   type="number"
-                                                   name="quantity"
-                                                   min="1"
-                                                   value="{{ old('quantity', 1) }}">
-
-                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-plus"></i>
-                                            </div>
+                                <div class="review_item">
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img
+                                                src="/customer/img/product/single-product/review-3.png"
+                                                alt=""
+                                            />
                                         </div>
-
-                                        <button type="submit"
-                                                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-                                            Thêm vào giỏ hàng
+                                        <div class="media-body">
+                                            <h4>Blake Ruiz</h4>
+                                            <h5>12th Feb, 2017 at 05:56 pm</h5>
+                                            <a class="reply_btn" href="#">Reply</a>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                        sed do eiusmod tempor incididunt ut labore et dolore magna
+                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                        ullamco laboris nisi ut aliquip ex ea commodo
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="review_box">
+                                <h4>Post a comment</h4>
+                                <form
+                                    class="row contact_form"
+                                    action="contact_process.php"
+                                    method="post"
+                                    id="contactForm"
+                                    novalidate="novalidate"
+                                >
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                id="name"
+                                                name="name"
+                                                placeholder="Your Full name"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input
+                                                type="email"
+                                                class="form-control"
+                                                id="email"
+                                                name="email"
+                                                placeholder="Email Address"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                id="number"
+                                                name="number"
+                                                placeholder="Phone Number"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                        <textarea
+                            class="form-control"
+                            name="message"
+                            id="message"
+                            rows="1"
+                            placeholder="Message"
+                        ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-right">
+                                        <button
+                                            type="submit"
+                                            value="submit"
+                                            class="btn submit_btn"
+                                        >
+                                            Submit Now
                                         </button>
                                     </div>
-                                </div>
-
-                                @error('quantity')
-                                <small class="text-danger d-block">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bor10 m-t-50 p-t-43 p-b-40">
-                <div class="tab01">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item p-b-10">
-                            <a class="nav-link active" data-toggle="tab" href="#description" role="tab">
-                                Mô tả
-                            </a>
-                        </li>
-
-                        <li class="nav-item p-b-10">
-                            <a class="nav-link" data-toggle="tab" href="#information" role="tab">
-                                Thông tin chi tiết
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="tab-content p-t-43">
-                        <div class="tab-pane fade show active" id="description" role="tabpanel">
-                            <div class="how-pos2 p-lr-15-md">
-                                <p class="stext-102 cl6">
-                                    {{ $product->description ?? '' }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade" id="information" role="tabpanel">
-                            <div class="row">
-                                <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-                                    <ul class="p-lr-28 p-lr-15-sm">
-                                        <li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Cân nặng
-											</span>
-
-                                            <span class="stext-102 cl6 size-206">
-												{{ $product->weight ?? '' }}
-											</span>
-                                        </li>
-
-                                        <li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Kích thước
-											</span>
-
-                                            <span class="stext-102 cl6 size-206">
-												{{ $product->dimension ?? '' }}
-											</span>
-                                        </li>
-
-                                        <li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Chất liệu
-											</span>
-
-                                            <span class="stext-102 cl6 size-206">
-												{{ $product->material ?? '' }}
-											</span>
-                                        </li>
-
-                                        <li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Màu sắc
-											</span>
-
-                                            <span class="stext-102 cl6 size-206">
-												{{ $product->colors ?? '' }}
-											</span>
-                                        </li>
-
-                                        <li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Size
-											</span>
-
-                                            <span class="stext-102 cl6 size-206">
-												{{ $product->category->sizes ?? '' }}
-											</span>
-                                        </li>
-                                    </ul>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
-			<span class="stext-107 cl6 p-lr-25">
-				Mã sản phẩm: {{ $product->code ?? ''}}
-			</span>
-            <span class="stext-107 cl6 p-lr-25">
-				Danh mục sản phẩm: {{ $product->category->name ?? '' }}
-			</span>
-        </div>
-    </section>
-
-    <!-- Related Products -->
-    <section class="sec-relate-product bg0 p-t-45 p-b-105">
-        <div class="container">
-            <div class="p-b-45">
-                <h3 class="ltext-106 cl5 txt-center">
-                    Sản phẩm liên quan
-                </h3>
-            </div>
-
-            <div class="wrap-slick2">
-                <div class="slick2">
-                    @foreach($productsFeatured as $item)
-                        <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                            <div class="block2">
-                                <div class="block2-pic hov-img0">
-                                    <img src="{{ $item->image ?? '' }}" alt="IMG-PRODUCT">
-
-                                    <a href="{{ route('customer.showProductDetail', $item->id) }}"
-                                       class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
-                                        Xem nhanh
-                                    </a>
+                <div
+                    class="tab-pane fade show active"
+                    id="review"
+                    role="tabpanel"
+                    aria-labelledby="review-tab"
+                >
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row total_rate">
+                                <div class="col-6">
+                                    <div class="box_total">
+                                        <h5>Overall</h5>
+                                        <h4>4.0</h4>
+                                        <h6>(03 Reviews)</h6>
+                                    </div>
                                 </div>
-
-                                <div class="block2-txt flex-w flex-t p-t-14">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="{{ route('customer.showProductDetail', $item->id) }}"
-                                           class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                            {{ $item->name ?? '' }}
-                                        </a>
-
-                                        <span class="stext-105 cl3">
-										{{ number_format($item->discount_price, 0, ',', '.') }} VND
-									</span>
+                                <div class="col-6">
+                                    <div class="rating_list">
+                                        <h3>Based on 3 Reviews</h3>
+                                        <ul class="list">
+                                            <li>
+                                                <a href="#"
+                                                >5 Star
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i> 01</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                >4 Star
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i> 01</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                >3 Star
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i> 01</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                >2 Star
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i> 01</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                >1 Star
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i> 01</a
+                                                >
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
+                            <div class="review_list">
+                                <div class="review_item">
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img
+                                                src="/customer/img/product/single-product/review-1.png"
+                                                alt=""
+                                            />
+                                        </div>
+                                        <div class="media-body">
+                                            <h4>Blake Ruiz</h4>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                        sed do eiusmod tempor incididunt ut labore et dolore magna
+                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                        ullamco laboris nisi ut aliquip ex ea commodo
+                                    </p>
+                                </div>
+                                <div class="review_item">
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img
+                                                src="/customer/img/product/single-product/review-2.png"
+                                                alt=""
+                                            />
+                                        </div>
+                                        <div class="media-body">
+                                            <h4>Blake Ruiz</h4>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                        sed do eiusmod tempor incididunt ut labore et dolore magna
+                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                        ullamco laboris nisi ut aliquip ex ea commodo
+                                    </p>
+                                </div>
+                                <div class="review_item">
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img
+                                                src="/customer/img/product/single-product/review-3.png"
+                                                alt=""
+                                            />
+                                        </div>
+                                        <div class="media-body">
+                                            <h4>Blake Ruiz</h4>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                        sed do eiusmod tempor incididunt ut labore et dolore magna
+                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                        ullamco laboris nisi ut aliquip ex ea commodo
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                    @endforeach
+                        <div class="col-lg-6">
+                            <div class="review_box">
+                                <h4>Add a Review</h4>
+                                <p>Your Rating:</p>
+                                <ul class="list">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-star"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-star"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-star"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-star"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-star"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <p>Outstanding</p>
+                                <form
+                                    class="row contact_form"
+                                    action="contact_process.php"
+                                    method="post"
+                                    id="contactForm"
+                                    novalidate="novalidate"
+                                >
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                id="name"
+                                                name="name"
+                                                placeholder="Your Full name"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input
+                                                type="email"
+                                                class="form-control"
+                                                id="email"
+                                                name="email"
+                                                placeholder="Email Address"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                id="number"
+                                                name="number"
+                                                placeholder="Phone Number"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                        <textarea
+                            class="form-control"
+                            name="message"
+                            id="message"
+                            rows="1"
+                            placeholder="Review"
+                        ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-right">
+                                        <button
+                                            type="submit"
+                                            value="submit"
+                                            class="btn submit_btn"
+                                        >
+                                            Submit Now
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+    <!--================End Product Description Area =================-->
 @endsection

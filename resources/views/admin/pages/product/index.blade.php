@@ -10,7 +10,6 @@
                 <li class="breadcrumb-item">Sản phẩm</li>
             </ul>
         </div>
-
         <div class="page-header-right ms-auto">
             <div class="page-header-right-items">
                 <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
@@ -22,7 +21,6 @@
             </div>
         </div>
     </div>
-
     <div class="main-content">
         <div class="row">
             <div class="col-lg-12">
@@ -48,7 +46,7 @@
                                 <tbody>
                                 @forelse($products as $product)
                                     @php
-                                        $img = $product->image ? $product->image : null;
+                                        $img = $product->image ?: null;
                                         $price = $product->price ?? 0;
                                         $discount = $product->discount_price ?? null;
                                         $isActive = (int)($product->is_active ?? 1) === 1;
@@ -73,12 +71,28 @@
                                                 <span class="fw-semibold text-dark text-truncate" style="max-width: 340px;">
                                                     {{ $product->name ?? '—' }}
                                                 </span>
+
                                                 <small class="text-muted">
                                                     Mã: <span class="fw-semibold">{{ $product->code ?? '—' }}</span>
-                                                    <span class="mx-2">•</span>
-                                                    Slug: <span class="text-truncate d-inline-block" style="max-width: 220px;vertical-align:bottom;">
+                                                    @if(!empty($product->brand))
+                                                        <span class="mx-2">•</span>
+                                                        Thương hiệu: <span class="fw-semibold">{{ $product->brand }}</span>
+                                                    @endif
+                                                </small>
+
+                                                <small class="text-muted mt-1">
+                                                    @php
+                                                        $subInfo = [];
+                                                        if (!empty($product->shape)) $subInfo[] = $product->shape;
+                                                        if (!empty($product->rim_type)) $subInfo[] = $product->rim_type;
+                                                        if (!empty($product->gender)) $subInfo[] = $product->gender;
+                                                    @endphp
+
+                                                    @if(count($subInfo))
+                                                        {{ implode(' • ', $subInfo) }}
+                                                    @else
                                                         {{ $product->slug ?? '—' }}
-                                                    </span>
+                                                    @endif
                                                 </small>
                                             </div>
                                         </td>
@@ -102,16 +116,19 @@
                                                 <span class="text-muted">—</span>
                                             @endif
                                         </td>
+
                                         <td>
                                             <span class="badge {{ ($product->stock_quantity ?? 0) > 0 ? 'bg-soft-success text-success' : 'bg-soft-danger text-danger' }}">
                                                 {{ (int)($product->stock_quantity ?? 0) }}
                                             </span>
                                         </td>
+
                                         <td>
                                             <span class="badge {{ $isActive ? 'bg-soft-success text-success' : 'bg-soft-secondary text-secondary' }}">
                                                 {{ $isActive ? 'Đang bán' : 'Tạm ẩn' }}
                                             </span>
                                         </td>
+
                                         <td class="text-muted">
                                             {{ $product->created_at ? $product->created_at->format('d/m/Y H:i') : '—' }}
                                         </td>

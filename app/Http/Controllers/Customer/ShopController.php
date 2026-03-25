@@ -12,19 +12,40 @@ class ShopController extends Controller
 {
     public function showIndex()
     {
-        $categories = Category::all();
-        $products = Product::all()->sortByDesc('created_at')->take(16);
-        return view('customer.pages.index',
-            [
-                'categories' => $categories,
-                'products' => $products,
-            ]
-        );
+        $products = Product::with('category')
+            ->where('is_active', 1)
+            ->latest()
+            ->get();
+
+        $featuredProducts = $products->take(3)->values();
+
+        $highlightProduct = $products->first();
+
+        $newArrivalProducts = $products->skip(1)->take(4)->values();
+
+        $inspiredProducts = $products->skip(5)->take(8)->values();
+
+        return view('customer.pages.index', [
+            'featuredProducts' => $featuredProducts,
+            'highlightProduct' => $highlightProduct,
+            'newArrivalProducts' => $newArrivalProducts,
+            'inspiredProducts' => $inspiredProducts,
+        ]);
     }
 
     public function showContact()
     {
         return view('customer.pages.contact');
+    }
+
+    public function showBlog()
+    {
+        return view('customer.pages.blog');
+    }
+
+    public function showBlogDetail()
+    {
+        return view('customer.pages.blog-detail');
     }
 
     public function showProducts()

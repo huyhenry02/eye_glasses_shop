@@ -7,8 +7,9 @@
 
         $code = old('code', $category->code ?? '');
         $name = old('name', $category->name ?? '');
+        $slug = old('slug', $category->slug ?? '');
         $description = old('description', $category->description ?? '');
-        $sizesOld = old('sizes', $category->sizes ?? '');
+        $isActive = old('is_active', isset($category) ? (string) $category->is_active : '1');
     @endphp
 
     <div class="page-header">
@@ -44,6 +45,7 @@
                               action="{{ $isEdit ? route('admin.category.update', $category->id) : route('admin.category.store') }}"
                               method="POST">
                             @csrf
+
                             <div class="row mb-4">
                                 <div class="col-lg-12">
                                     <h6 class="fw-bold mb-3">Thông tin danh mục</h6>
@@ -55,8 +57,11 @@
                                         <span class="input-group-text"><i class="feather-hash"></i></span>
                                         <input type="text" name="code" class="form-control"
                                                value="{{ $code }}"
-                                               placeholder="Ví dụ: CAT001" required>
+                                               placeholder="Ví dụ: KINHRAM" required>
                                     </div>
+                                    @error('code')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-lg-6 mb-4">
@@ -65,24 +70,41 @@
                                         <span class="input-group-text"><i class="feather-tag"></i></span>
                                         <input type="text" name="name" class="form-control"
                                                value="{{ $name }}"
-                                               placeholder="Ví dụ: Giày thể thao" required>
+                                               placeholder="Ví dụ: Kính râm" required>
                                     </div>
+                                    @error('name')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
-                                <div class="col-lg-12 mb-2">
-                                    <label class="form-label fw-semibold">Size sản phẩm</label>
+                                <div class="col-lg-6 mb-4">
+                                    <label class="form-label fw-semibold">Slug</label>
                                     <div class="input-group">
-                                        <span class="input-group-text"><i class="feather-maximize"></i></span>
-                                        <input type="text" class="form-control" id="sizeInput"
-                                               placeholder="Nhập size (VD: S, M, L, XL) rồi nhấn Enter">
+                                        <span class="input-group-text"><i class="feather-link"></i></span>
+                                        <input type="text" name="slug" class="form-control"
+                                               value="{{ $slug }}"
+                                               placeholder="Ví dụ: kinh-ram">
                                     </div>
-
-                                    <div id="sizeContainer" class="mt-2 d-flex flex-wrap gap-2"></div>
-                                    <input type="hidden" id="sizeValues" name="sizes" value="{{ $sizesOld }}">
                                     <div class="text-muted mt-2" style="font-size: 13px;">
-                                        Gợi ý: Nhập từng size và nhấn Enter (VD: S, M, L, XL, XXL). Hệ thống sẽ lưu
-                                        dạng: S,M,L,XL,XXL
+                                        Có thể để trống, hệ thống sẽ tự sinh từ tên danh mục.
                                     </div>
+                                    @error('slug')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-lg-6 mb-4">
+                                    <label class="form-label fw-semibold">Trạng thái</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="feather-toggle-right"></i></span>
+                                        <select name="is_active" class="form-control">
+                                            <option value="1" {{ $isActive === '1' ? 'selected' : '' }}>Hoạt động</option>
+                                            <option value="0" {{ $isActive === '0' ? 'selected' : '' }}>Ngừng hoạt động</option>
+                                        </select>
+                                    </div>
+                                    @error('is_active')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-lg-12 mb-4">
@@ -92,11 +114,14 @@
                                         <textarea name="description" class="form-control" rows="4"
                                                   placeholder="Nhập mô tả (không bắt buộc)">{{ $description }}</textarea>
                                     </div>
+                                    @error('description')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-end gap-2">
-                                <a href="#" class="btn btn-light">
+                                <a href="{{ route('admin.category.showIndex') }}" class="btn btn-light">
                                     <i class="feather-arrow-left me-2"></i>
                                     Quay lại
                                 </a>
@@ -106,92 +131,6 @@
                                 </button>
                             </div>
                         </form>
-
-                        <style>
-                            .size-pill {
-                                display: inline-flex;
-                                align-items: center;
-                                gap: 8px;
-                                padding: 6px 10px;
-                                border-radius: 999px;
-                                background: rgba(13, 110, 253, 0.10);
-                                color: #0d6efd;
-                                font-weight: 600;
-                                font-size: 13px;
-                                border: 1px solid rgba(13, 110, 253, 0.18);
-                            }
-
-                            .size-pill button {
-                                border: none;
-                                background: transparent;
-                                color: #dc3545;
-                                font-weight: 900;
-                                line-height: 1;
-                                padding: 0;
-                                cursor: pointer;
-                                font-size: 16px;
-                            }
-                        </style>
-
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function () {
-                                const sizeInput = document.getElementById("sizeInput");
-                                const sizeContainer = document.getElementById("sizeContainer");
-                                const sizeValues = document.getElementById("sizeValues");
-
-                                let sizes = [];
-
-                                function normalizeSize(s) {
-                                    return (s || '').trim().replace(/\s+/g, '').toUpperCase();
-                                }
-
-                                function updateSizeDisplay() {
-                                    sizeContainer.innerHTML = "";
-                                    sizes.forEach((size, index) => {
-                                        const pill = document.createElement("span");
-                                        pill.className = "size-pill";
-                                        pill.innerHTML = `
-                                            ${size}
-                                            <button type="button" aria-label="Xóa size" data-index="${index}">&times;</button>
-                                        `;
-                                        sizeContainer.appendChild(pill);
-                                    });
-                                    sizeValues.value = sizes.join(",");
-                                }
-
-                                function removeSize(index) {
-                                    sizes.splice(index, 1);
-                                    updateSizeDisplay();
-                                }
-
-                                const existing = (sizeValues.value || "");
-                                existing.split(",").map(s => normalizeSize(s)).forEach(s => {
-                                    if (s && !sizes.includes(s)) sizes.push(s);
-                                });
-                                updateSizeDisplay();
-
-                                sizeInput.addEventListener("keydown", function (event) {
-                                    if (event.key === "Enter") {
-                                        event.preventDefault();
-                                        const sizeText = normalizeSize(sizeInput.value);
-
-                                        if (sizeText && !sizes.includes(sizeText)) {
-                                            sizes.push(sizeText);
-                                            updateSizeDisplay();
-                                        }
-
-                                        sizeInput.value = "";
-                                    }
-                                });
-
-                                sizeContainer.addEventListener("click", function (e) {
-                                    const btn = e.target.closest("button[data-index]");
-                                    if (!btn) return;
-                                    removeSize(Number(btn.getAttribute("data-index")));
-                                });
-                            });
-                        </script>
-
                     </div>
                 </div>
             </div>

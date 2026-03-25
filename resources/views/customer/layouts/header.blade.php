@@ -1,162 +1,175 @@
-<header class="header-v4">
-    <div class="container-menu-desktop">
-        <div class="wrap-menu-desktop how-shadow1">
-            <nav class="limiter-menu-desktop container">
-                <a href="{{ route('customer.showIndex') }}" class="logo">
-                    <img src="/customer/images/icons/logo-01.png" alt="IMG-LOGO">
-                </a>
-
-                <div class="menu-desktop">
-                    <ul class="main-menu">
-                        <li class="{{ request()->routeIs('customer.showIndex') ? 'active-menu' : '' }}">
-                            <a href="{{ route('customer.showIndex') }}">Trang chủ</a>
-                        </li>
-
-                        <li class="{{ request()->routeIs('customer.showProducts') ? 'active-menu' : '' }}">
-                            <a href="{{ route('customer.showProducts') }}">Sản phẩm</a>
-                        </li>
-
-                        <li>
-                            <a href="">Giới thiệu</a>
-                        </li>
-
-                        <li>
-                            <a href="">Liên hệ</a>
-                        </li>
-                    </ul>
+<header class="header_area">
+    <div class="top_menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="float-left">
+                        <p>Phone: +01 256 25 235</p>
+                        <p>email: info@eiser.com</p>
+                    </div>
                 </div>
-
-                <div class="wrap-icon-header flex-w flex-r-m">
-                    @auth
-                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                             data-notify="{{ $cartCountGlobal ?? 0 }}">
-                            <i class="zmdi zmdi-shopping-cart"></i>
-                        </div>
-                    @endauth
-
-                    <div class="account-dropdown-wrapper" id="accountDropdown">
-                        <button type="button"
-                                class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 account-toggle"
-                                id="accountToggle">
-                            <i class="zmdi zmdi-account-o"></i>
-                        </button>
-
-                        <ul class="account-dropdown-menu" id="accountMenu">
-                            @guest
-                                <li>
-                                    <a href="{{ route('auth.showLogin') }}">Đăng nhập</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('auth.showRegister') }}">Đăng ký</a>
-                                </li>
-                            @endguest
-
-                            @auth
-                                <li>
-                                    <a href="{{ route('customer.orders.index') }}">
-                                        Đơn hàng của tôi
-                                    </a>
-                                </li>
-
-                                @if(auth()->user()->user_type === 'admin')
-                                    <li>
-                                        <a href="{{ route('admin.customer.showIndex') }}">
-                                            Quản trị hệ thống
-                                        </a>
-                                    </li>
-                                @endif
-
-                                <li>
-                                    <a href="{{ route('auth.logout') }}">
-                                        Đăng xuất
-                                    </a>
-                                </li>
-                            @endauth
+                <div class="col-lg-5">
+                    <div class="float-right">
+                        <ul class="right_side">
+                            <li>
+                                <a href="cart.html">
+                                    gift card
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tracking.html">
+                                    track order
+                                </a>
+                            </li>
+                            <li>
+                                <a href="contact.html">
+                                    Contact Us
+                                </a>
+                            </li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main_menu">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light w-100">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <a class="navbar-brand logo_h" href="index.html">
+                    <img src="/customer/img/logo.png" alt="" />
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div
+                    class="collapse navbar-collapse offset w-100"
+                    id="navbarSupportedContent"
+                >
+                    <div class="row w-100 mr-0">
+                        <div class="col-lg-7 pr-0">
+                            <ul class="nav navbar-nav center_nav pull-right">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index.html">Home</a>
+                                </li>
+                                <li class="nav-item submenu dropdown">
+                                    <a
+                                        href="#"
+                                        class="nav-link dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        role="button"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                    >Shop</a
+                                    >
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="category.html"
+                                            >Shop Category</a
+                                            >
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="single-product.html"
+                                            >Product Details</a
+                                            >
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="checkout.html"
+                                            >Product Checkout</a
+                                            >
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="cart.html">Shopping Cart</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item submenu dropdown">
+                                    <a
+                                        href="#"
+                                        class="nav-link dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        role="button"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                    >Blog</a
+                                    >
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="blog.html">Blog</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="single-blog.html"
+                                            >Blog Details</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item active submenu dropdown">
+                                    <a
+                                        href="#"
+                                        class="nav-link dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        role="button"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                    >Pages</a
+                                    >
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="tracking.html">Tracking</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="elements.html">Elements</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="contact.html">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-5 pr-0">
+                            <ul class="nav navbar-nav navbar-right right_nav pull-right">
+                                <li class="nav-item">
+                                    <a href="#" class="icons">
+                                        <i class="ti-search" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="icons">
+                                        <i class="ti-shopping-cart"></i>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="icons">
+                                        <i class="ti-user" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="icons">
+                                        <i class="ti-heart" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </nav>
         </div>
     </div>
 </header>
-<style>
-    .wrap-icon-header {
-        align-items: center;
-    }
-
-    .account-dropdown-wrapper {
-        position: relative;
-        display: flex;
-        align-items: center;
-        margin-left: 6px;
-    }
-
-    .account-toggle {
-        border: none;
-        background: transparent;
-        outline: none;
-        cursor: pointer;
-    }
-
-    .account-toggle:focus {
-        outline: none;
-    }
-
-    .account-dropdown-menu {
-        position: absolute;
-        top: calc(100% + 10px);
-        right: 0;
-        min-width: 220px;
-        background: #fff;
-        border: 1px solid #e6e6e6;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-        padding: 8px 0;
-        margin: 0;
-        list-style: none;
-        display: none;
-        z-index: 9999;
-        border-radius: 6px;
-    }
-
-    .account-dropdown-menu.show {
-        display: block;
-    }
-
-    .account-dropdown-menu li {
-        margin: 0;
-        padding: 0;
-    }
-
-    .account-dropdown-menu li a {
-        display: block;
-        padding: 10px 18px;
-        color: #333;
-        font-size: 14px;
-        line-height: 1.4;
-        text-decoration: none;
-        white-space: nowrap;
-    }
-
-    .account-dropdown-menu li a:hover {
-        background: #f7f7f7;
-        color: #717fe0;
-    }
-</style>
-<script src="/customer/vendor/jquery/jquery-3.2.1.min.js"></script>
-<script>
-    $(function () {
-        $('#accountToggle').on('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            $('#accountMenu').toggleClass('show');
-        });
-
-        $('#accountMenu').on('click', function (e) {
-            e.stopPropagation();
-        });
-
-        $(document).on('click', function () {
-            $('#accountMenu').removeClass('show');
-        });
-    });
-</script>

@@ -35,7 +35,8 @@
                                     <th style="width:70px;">STT</th>
                                     <th style="width:140px;">Mã</th>
                                     <th style="width:220px;">Tên danh mục</th>
-                                    <th style="width:260px;">Size áp dụng</th>
+                                    <th style="width:220px;">Slug</th>
+                                    <th style="width:140px;">Trạng thái</th>
                                     <th>Mô tả</th>
                                     <th style="width:160px;">Ngày tạo</th>
                                     <th class="text-end" style="width:140px;">Hành động</th>
@@ -43,11 +44,6 @@
                                 </thead>
                                 <tbody>
                                 @forelse($categories as $category)
-                                    @php
-                                        $sizesRaw = $category->sizes ?? '';
-                                        $sizesArr = array_values(array_filter(array_map('trim', explode(',', $sizesRaw))));
-                                    @endphp
-
                                     <tr>
                                         <td class="text-muted">{{ $loop->iteration }}</td>
 
@@ -65,16 +61,20 @@
                                         </td>
 
                                         <td>
-                                            @if(count($sizesArr))
-                                                <div class="d-flex flex-wrap gap-1">
-                                                    @foreach($sizesArr as $s)
-                                                        <span class="badge bg-soft-primary text-primary" style="font-weight:600;">
-                                                            {{ $s }}
-                                                        </span>
-                                                    @endforeach
-                                                </div>
+                                            <span class="text-muted text-truncate d-inline-block" style="max-width: 220px;">
+                                                {{ $category->slug ?? '—' }}
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            @if((int) ($category->is_active ?? 0) === 1)
+                                                <span class="badge bg-soft-success text-success" style="font-weight:600;">
+                                                    Hoạt động
+                                                </span>
                                             @else
-                                                <span class="text-muted">—</span>
+                                                <span class="badge bg-soft-danger text-danger" style="font-weight:600;">
+                                                    Ngừng hoạt động
+                                                </span>
                                             @endif
                                         </td>
 
@@ -109,7 +109,8 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item text-danger" href="{{ route('admin.category.destroy', $category->id) }}"
+                                                        <a class="dropdown-item text-danger"
+                                                           href="{{ route('admin.category.destroy', $category->id) }}"
                                                            onclick="return confirm('Bạn chắc chắn muốn xóa danh mục này?')">
                                                             <i class="feather feather-trash-2 me-2"></i>
                                                             <span>Xóa</span>
@@ -121,7 +122,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="text-center py-5 text-muted" style="font-size: 15px;">
+                                        <td colspan="8" class="text-center py-5 text-muted" style="font-size: 15px;">
                                             Chưa có danh mục nào.
                                         </td>
                                     </tr>
@@ -140,6 +141,7 @@
             </div>
         </div>
     </div>
+
     <style>
         #categoryList th {
             font-size: 12px;
