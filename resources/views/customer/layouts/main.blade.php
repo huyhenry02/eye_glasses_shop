@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <link rel="icon" href="/customer/img/favicon.png" type="image/png"/>
-    <title>Eiser ecommerce</title>
+    <title>Kính mắt</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/customer/css/bootstrap.css"/>
     <link rel="stylesheet" href="/customer/vendors/linericon/style.css"/>

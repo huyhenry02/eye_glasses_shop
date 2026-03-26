@@ -28,7 +28,7 @@ class AuthController extends Controller
             $credentials = $request->only('phone', 'password');
             if (auth()->attempt($credentials)) {
                 $user = auth()->user();
-                if ($user->user_type === 'customer')  {
+                if ($user->user_type === 'customer') {
                     return redirect()->route('customer.showIndex')->with('success', 'Đăng nhập thành công');
                 }
                 return redirect()->route('admin.customer.showIndex')->with('success', 'Đăng nhập thành công');
@@ -49,16 +49,25 @@ class AuthController extends Controller
         }
     }
 
-    public function postRegister(Request $request): ?RedirectResponse
+    public function postRegister(Request $request): RedirectResponse
     {
         try {
             $data = $request->input();
+
+            if (($data['password'] ?? '') !== ($data['password_confirmation'] ?? '')) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Mật khẩu nhập lại không khớp.');
+            }
+
             DB::beginTransaction();
+
             $user = User::create([
                 'password' => Hash::make($data['password']),
                 'phone' => $data['phone'],
                 'user_type' => User::ROLE_CUSTOMER,
             ]);
+
             Customer::create([
                 'user_id' => $user->id,
                 'full_name' => $data['full_name'],
@@ -67,11 +76,16 @@ class AuthController extends Controller
                 'gender' => $data['gender'],
                 'birthday' => $data['birthday'],
             ]);
+
             DB::commit();
+
             return redirect()->route('auth.showLogin')->with('success', 'Đăng ký thành công.');
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->route('auth.showRegister')->with('success', 'Đăng ký thành công.');
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Đăng ký thất bại.');
         }
     }
 }

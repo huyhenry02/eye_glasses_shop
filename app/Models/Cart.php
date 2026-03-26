@@ -11,8 +11,6 @@ class Cart extends Model
         'customer_id',
         'product_id',
         'quantity',
-        'size',
-        'color',
     ];
 
     public function customer(): BelongsTo

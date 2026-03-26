@@ -13,8 +13,6 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('customer_id')->unsigned();
             $table->bigInteger('product_id')->unsigned();
-            $table->string('size', 255)->nullable();
-            $table->string('color', 255)->nullable();
             $table->integer('quantity');
             $table->timestamps();
             $table->index('customer_id', 'carts_customer_id_foreign');
