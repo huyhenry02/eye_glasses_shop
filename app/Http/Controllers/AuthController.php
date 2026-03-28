@@ -31,7 +31,7 @@ class AuthController extends Controller
                 if ($user->user_type === 'customer') {
                     return redirect()->route('customer.showIndex')->with('success', 'Đăng nhập thành công');
                 }
-                return redirect()->route('admin.customer.showIndex')->with('success', 'Đăng nhập thành công');
+                return redirect()->route('admin.dashboard.showIndex')->with('success', 'Đăng nhập thành công');
             }
             return redirect()->back()->with('error', 'Đăng nhập thất bại');
         } catch (Exception $e) {

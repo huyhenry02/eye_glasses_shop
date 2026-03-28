@@ -154,7 +154,7 @@
 
                                             @if(auth()->user()->user_type === 'admin')
                                                 <li class="nav-item">
-                                                    <a class="nav-link" href="{{ route('admin.product.showIndex') }}">
+                                                    <a class="nav-link" href="{{ route('admin.dashboard.showIndex') }}">
                                                         Quản trị hệ thống
                                                     </a>
                                                 </li>

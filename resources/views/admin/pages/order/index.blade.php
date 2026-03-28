@@ -1,17 +1,5 @@
 @extends('admin.layouts.main')
 @section('content')
-    <div class="page-header">
-        <div class="page-header-left d-flex align-items-center">
-            <div class="page-header-title">
-                <h5 class="m-b-10">Danh sách đơn hàng</h5>
-            </div>
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Quản trị</a></li>
-                <li class="breadcrumb-item">Đơn hàng</li>
-            </ul>
-        </div>
-    </div>
-
     <div class="main-content">
         <div class="row">
             <div class="col-lg-12">

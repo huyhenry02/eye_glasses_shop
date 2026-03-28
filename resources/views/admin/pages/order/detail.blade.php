@@ -22,17 +22,6 @@
     @endphp
 
     <div class="page-header">
-        <div class="page-header-left d-flex align-items-center">
-            <div class="page-header-title">
-                <h5 class="m-b-10">Chi tiết đơn hàng</h5>
-            </div>
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Quản trị</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.order.showIndex') }}">Đơn hàng</a></li>
-                <li class="breadcrumb-item">{{ $order->order_code }}</li>
-            </ul>
-        </div>
-
         <div class="page-header-right ms-auto">
             <div class="d-flex align-items-center gap-2">
                 <a href="{{ route('admin.order.showEdit', $order->id) }}" class="btn btn-primary">

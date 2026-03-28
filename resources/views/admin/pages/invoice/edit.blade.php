@@ -47,20 +47,6 @@
             ];
         }
     @endphp
-
-    <div class="page-header">
-        <div class="page-header-left d-flex align-items-center">
-            <div class="page-header-title">
-                <h5 class="m-b-10">{{ $title }}</h5>
-            </div>
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Quản trị</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.invoice.showIndex') }}">Hóa đơn</a></li>
-                <li class="breadcrumb-item">{{ $isEdit ? 'Chỉnh sửa' : 'Tạo mới' }}</li>
-            </ul>
-        </div>
-    </div>
-
     <div class="main-content">
         <form
             action="{{ $isEdit ? route('admin.invoice.update', $invoice->id) : route('admin.invoice.store') }}"

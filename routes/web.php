@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\OrderController;
@@ -51,26 +52,66 @@ Route::prefix('customer')
 
 Route::prefix('admin')
     ->name('admin.')
-    ->middleware('auth')
     ->group(function () {
         Route::prefix('employee')
             ->name('employee.')
             ->group(function () {
-                Route::get('/', [EmployeeController::class, 'showIndex'])->name('showIndex');
-                Route::get('/create', [EmployeeController::class, 'showCreate'])->name('showCreate');
-                Route::get('/edit/{id}', [EmployeeController::class, 'showEdit'])->name('showEdit');
+                Route::get('/', [EmployeeController::class, 'showIndex'])
+                    ->name('showIndex')
+                    ->defaults('page_title', 'Danh sách nhân viên')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Nhân viên');
+
+                Route::get('/create', [EmployeeController::class, 'showCreate'])
+                    ->name('showCreate')
+                    ->defaults('page_title', 'Thêm mới nhân viên')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Nhân viên')
+                    ->defaults('page_action', 'Thêm mới');
+
+                Route::get('/edit/{id}', [EmployeeController::class, 'showEdit'])
+                    ->name('showEdit')
+                    ->defaults('page_title', 'Cập nhật nhân viên')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Nhân viên')
+                    ->defaults('page_action', 'Chỉnh sửa');
 
                 Route::post('/create', [EmployeeController::class, 'store'])->name('store');
                 Route::post('/edit/{id}', [EmployeeController::class, 'update'])->name('update');
                 Route::get('/delete/{id}', [EmployeeController::class, 'destroy'])->name('destroy');
             });
+        Route::prefix('dashboard')
+            ->name('dashboard.')
+            ->group(function () {
+                Route::get('/', [DashboardController::class, 'showIndex'])
+                    ->name('showIndex')
+                    ->defaults('page_title', 'Tổng quan')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Tổng quan');
+            });
 
         Route::prefix('customer')
             ->name('customer.')
             ->group(function () {
-                Route::get('/', [CustomerController::class, 'showIndex'])->name('showIndex');
-                Route::get('/create', [CustomerController::class, 'showCreate'])->name('showCreate');
-                Route::get('/edit/{id}', [CustomerController::class, 'showEdit'])->name('showEdit');
+                Route::get('/', [CustomerController::class, 'showIndex'])
+                    ->name('showIndex')
+                    ->defaults('page_title', 'Danh sách khách hàng')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Khách hàng');
+
+                Route::get('/create', [CustomerController::class, 'showCreate'])
+                    ->name('showCreate')
+                    ->defaults('page_title', 'Thêm mới khách hàng')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Khách hàng')
+                    ->defaults('page_action', 'Thêm mới');
+
+                Route::get('/edit/{id}', [CustomerController::class, 'showEdit'])
+                    ->name('showEdit')
+                    ->defaults('page_title', 'Cập nhật khách hàng')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Khách hàng')
+                    ->defaults('page_action', 'Chỉnh sửa');
 
                 Route::post('/create', [CustomerController::class, 'store'])->name('store');
                 Route::post('/edit/{id}', [CustomerController::class, 'update'])->name('update');
@@ -80,9 +121,25 @@ Route::prefix('admin')
         Route::prefix('category')
             ->name('category.')
             ->group(function () {
-                Route::get('/', [CategoryController::class, 'showIndex'])->name('showIndex');
-                Route::get('/create', [CategoryController::class, 'showCreate'])->name('showCreate');
-                Route::get('/edit/{id}', [CategoryController::class, 'showEdit'])->name('showEdit');
+                Route::get('/', [CategoryController::class, 'showIndex'])
+                    ->name('showIndex')
+                    ->defaults('page_title', 'Danh sách danh mục')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Danh mục');
+
+                Route::get('/create', [CategoryController::class, 'showCreate'])
+                    ->name('showCreate')
+                    ->defaults('page_title', 'Thêm mới danh mục')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Danh mục')
+                    ->defaults('page_action', 'Thêm mới');
+
+                Route::get('/edit/{id}', [CategoryController::class, 'showEdit'])
+                    ->name('showEdit')
+                    ->defaults('page_title', 'Cập nhật danh mục')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Danh mục')
+                    ->defaults('page_action', 'Chỉnh sửa');
 
                 Route::post('/create', [CategoryController::class, 'store'])->name('store');
                 Route::post('/edit/{id}', [CategoryController::class, 'update'])->name('update');
@@ -92,10 +149,32 @@ Route::prefix('admin')
         Route::prefix('product')
             ->name('product.')
             ->group(function () {
-                Route::get('/', [ProductController::class, 'showIndex'])->name('showIndex');
-                Route::get('/create', [ProductController::class, 'showCreate'])->name('showCreate');
-                Route::get('/edit/{id}', [ProductController::class, 'showEdit'])->name('showEdit');
-                Route::get('/detail/{id}', [ProductController::class, 'showDetail'])->name('showDetail');
+                Route::get('/', [ProductController::class, 'showIndex'])
+                    ->name('showIndex')
+                    ->defaults('page_title', 'Danh sách sản phẩm')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Sản phẩm');
+
+                Route::get('/create', [ProductController::class, 'showCreate'])
+                    ->name('showCreate')
+                    ->defaults('page_title', 'Thêm mới sản phẩm')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Sản phẩm')
+                    ->defaults('page_action', 'Thêm mới');
+
+                Route::get('/edit/{id}', [ProductController::class, 'showEdit'])
+                    ->name('showEdit')
+                    ->defaults('page_title', 'Cập nhật sản phẩm')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Sản phẩm')
+                    ->defaults('page_action', 'Chỉnh sửa');
+
+                Route::get('/detail/{id}', [ProductController::class, 'showDetail'])
+                    ->name('showDetail')
+                    ->defaults('page_title', 'Chi tiết sản phẩm')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Sản phẩm')
+                    ->defaults('page_action', 'Chi tiết');
 
                 Route::post('/create', [ProductController::class, 'store'])->name('store');
                 Route::post('/edit/{id}', [ProductController::class, 'update'])->name('update');
@@ -105,9 +184,25 @@ Route::prefix('admin')
         Route::prefix('order')
             ->name('order.')
             ->group(function () {
-                Route::get('/', [OrderController::class, 'showIndex'])->name('showIndex');
-                Route::get('/detail/{id}', [OrderController::class, 'showDetail'])->name('showDetail');
-                Route::get('/edit/{id}', [OrderController::class, 'showEdit'])->name('showEdit');
+                Route::get('/', [OrderController::class, 'showIndex'])
+                    ->name('showIndex')
+                    ->defaults('page_title', 'Danh sách đơn hàng')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Đơn hàng');
+
+                Route::get('/detail/{id}', [OrderController::class, 'showDetail'])
+                    ->name('showDetail')
+                    ->defaults('page_title', 'Chi tiết đơn hàng')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Đơn hàng')
+                    ->defaults('page_action', 'Chi tiết');
+
+                Route::get('/edit/{id}', [OrderController::class, 'showEdit'])
+                    ->name('showEdit')
+                    ->defaults('page_title', 'Cập nhật đơn hàng')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Đơn hàng')
+                    ->defaults('page_action', 'Chỉnh sửa');
 
                 Route::post('/edit/{id}', [OrderController::class, 'update'])->name('update');
                 Route::delete('/delete/{id}', [OrderController::class, 'destroy'])->name('destroy');
@@ -116,12 +211,29 @@ Route::prefix('admin')
         Route::prefix('invoice')
             ->name('invoice.')
             ->group(function () {
-                Route::get('/', [InvoiceController::class, 'showIndex'])->name('showIndex');
-                Route::get('/create', [InvoiceController::class, 'showCreate'])->name('showCreate');
-                Route::get('/edit/{id}', [InvoiceController::class, 'showEdit'])->name('showEdit');
+                Route::get('/', [InvoiceController::class, 'showIndex'])
+                    ->name('showIndex')
+                    ->defaults('page_title', 'Danh sách hóa đơn')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Hóa đơn');
+
+                Route::get('/create', [InvoiceController::class, 'showCreate'])
+                    ->name('showCreate')
+                    ->defaults('page_title', 'Thêm mới hóa đơn')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Hóa đơn')
+                    ->defaults('page_action', 'Thêm mới');
+
+                Route::get('/edit/{id}', [InvoiceController::class, 'showEdit'])
+                    ->name('showEdit')
+                    ->defaults('page_title', 'Cập nhật hóa đơn')
+                    ->defaults('page_parent', 'Quản trị')
+                    ->defaults('page_current', 'Hóa đơn')
+                    ->defaults('page_action', 'Chỉnh sửa');
+
                 Route::post('/create', [InvoiceController::class, 'store'])->name('store');
                 Route::post('/edit/{id}', [InvoiceController::class, 'update'])->name('update');
                 Route::delete('/delete/{id}', [InvoiceController::class, 'destroy'])->name('destroy');
-                Route::get('/vnpay-return', [InvoiceController::class, 'vnpayReturn'])->name('vnpayReturn');
+                Route::get('/vnpay-return', [InvoiceController::class, 'vnpayReturn'])->name('vnpay.return');
             });
     });

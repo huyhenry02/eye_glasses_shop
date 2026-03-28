@@ -30,18 +30,6 @@
                 </div>
 
                 <div class="col-lg-8 mb-4 mb-lg-0">
-                    @if(session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    @if(session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-
                     <form class="form-contact contact_form"
                           action="{{ route('auth.postLogin') }}"
                           method="POST"

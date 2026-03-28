@@ -10,20 +10,6 @@
         $paymentStatus = old('payment_status', $order->payment_status ?? \App\Models\Order::PAYMENT_STATUS_UNPAID);
         $paymentMethod = old('payment_method', $order->payment_method ?? \App\Models\Order::PAYMENT_METHOD_COD);
     @endphp
-
-    <div class="page-header">
-        <div class="page-header-left d-flex align-items-center">
-            <div class="page-header-title">
-                <h5 class="m-b-10">Cập nhật đơn hàng</h5>
-            </div>
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Quản trị</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.order.showIndex') }}">Đơn hàng</a></li>
-                <li class="breadcrumb-item">Chỉnh sửa</li>
-            </ul>
-        </div>
-    </div>
-
     <div class="main-content">
         <div class="row">
             <div class="col-lg-12">

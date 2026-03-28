@@ -2,16 +2,6 @@
 
 @section('content')
     <div class="page-header">
-        <div class="page-header-left d-flex align-items-center">
-            <div class="page-header-title">
-                <h5 class="m-b-10">Danh sách hóa đơn</h5>
-            </div>
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Quản trị</a></li>
-                <li class="breadcrumb-item">Hóa đơn</li>
-            </ul>
-        </div>
-
         <div class="page-header-right ms-auto">
             <a href="{{ route('admin.invoice.showCreate') }}" class="btn btn-primary">
                 <i class="feather-plus me-2"></i>

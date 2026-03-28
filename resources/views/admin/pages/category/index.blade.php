@@ -1,16 +1,6 @@
 @extends('admin.layouts.main')
 @section('content')
     <div class="page-header">
-        <div class="page-header-left d-flex align-items-center">
-            <div class="page-header-title">
-                <h5 class="m-b-10">Danh sách Danh mục</h5>
-            </div>
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Quản trị</a></li>
-                <li class="breadcrumb-item">Danh mục</li>
-            </ul>
-        </div>
-
         <div class="page-header-right ms-auto">
             <div class="page-header-right-items">
                 <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
