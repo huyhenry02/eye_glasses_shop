@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Invoice extends Model
 {
     protected $table = 'invoices';
+
     protected $fillable = [
         'invoice_code',
         'customer_name',
@@ -18,8 +19,20 @@ class Invoice extends Model
         'payment_method',
         'payment_status',
         'payment_time',
+        'payment_transaction_id',
+        'payment_bank_code',
+        'payment_response_code',
+        'payment_secure_hash',
         'employee_id',
     ];
+
+    protected $casts = [
+        'total_amount' => 'integer',
+        'payment_time' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     public const STATUS_DRAFT = 'draft';
     public const STATUS_COMPLETED = 'completed';
     public const STATUS_CANCELLED = 'cancelled';

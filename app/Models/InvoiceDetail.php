@@ -8,13 +8,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class InvoiceDetail extends Model
 {
     protected $table = 'invoice_details';
+
     protected $fillable = [
         'invoice_id',
         'product_id',
         'quantity',
         'total_price',
-        'size',
-        'color',
+    ];
+
+    protected $casts = [
+        'invoice_id' => 'integer',
+        'product_id' => 'integer',
+        'quantity' => 'integer',
+        'total_price' => 'integer',
     ];
 
     public function invoice(): BelongsTo

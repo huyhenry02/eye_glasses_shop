@@ -1,320 +1,149 @@
 @extends('customer.layouts.main')
+
 @section('content')
-    <!--================Home Banner Area =================-->
     <section class="banner_area">
         <div class="banner_inner d-flex align-items-center">
             <div class="container">
-                <div
-                    class="banner_content d-md-flex justify-content-between align-items-center"
-                >
+                <div class="banner_content d-md-flex justify-content-between align-items-center">
                     <div class="mb-3 mb-md-0">
-                        <h2>Product Checkout</h2>
-                        <p>Very us move be blessed multiply night</p>
+                        <h1>Thanh toán</h1>
+                        <p>Hoàn tất thông tin nhận hàng để tạo đơn hàng nhanh chóng và chính xác.</p>
                     </div>
                     <div class="page_link">
-                        <a href="index.html">Home</a>
-                        <a href="checkout.html">Product Checkout</a>
+                        <a href="{{ route('customer.showIndex') }}">Trang chủ</a>
+                        <a href="{{ route('customer.showCheckout') }}">Thanh toán</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!--================End Home Banner Area =================-->
 
-    <!--================Checkout Area =================-->
     <section class="checkout_area section_gap">
         <div class="container">
-            <div class="returning_customer">
-                <div class="check_title">
-                    <h2>
-                        Returning Customer?
-                        <a href="#">Click here to login</a>
-                    </h2>
-                </div>
-                <p>
-                    If you have shopped with us before, please enter your details in the
-                    boxes below. If you are a new customer, please proceed to the
-                    Billing & Shipping section.
-                </p>
-                <form
-                    class="row contact_form"
-                    action="#"
-                    method="post"
-                    novalidate="novalidate"
-                >
-                    <div class="col-md-6 form-group p_star">
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="name"
-                            name="name"
-                            value=" "
-                        />
-                        <span
-                            class="placeholder"
-                            data-placeholder="Username or Email"
-                        ></span>
-                    </div>
-                    <div class="col-md-6 form-group p_star">
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="password"
-                            name="password"
-                            value=""
-                        />
-                        <span class="placeholder" data-placeholder="Password"></span>
-                    </div>
-                    <div class="col-md-12 form-group">
-                        <button type="submit" value="submit" class="btn submit_btn">
-                            Send Message
-                        </button>
-                        <div class="creat_account">
-                            <input type="checkbox" id="f-option" name="selector" />
-                            <label for="f-option">Remember me</label>
+            <div class="billing_details">
+                <form class="row" action="{{ route('customer.storeOrder') }}" method="POST">
+                    @csrf
+                    <div class="col-lg-8">
+                        <h3 class="mb-4">Thông tin nhận hàng</h3>
+                        <div class="row contact_form">
+                            <div class="col-md-6 form-group p_star">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="shipping_name"
+                                    name="shipping_name"
+                                    value="{{ old('shipping_name', $customer->full_name ?? '') }}"
+                                    required
+                                >
+                                <span class="placeholder" data-placeholder="Họ và tên"></span>
+                            </div>
+
+                            <div class="col-md-6 form-group p_star">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="shipping_phone"
+                                    name="shipping_phone"
+                                    value="{{ old('shipping_phone', auth()->user()->phone ?? '') }}"
+                                    required
+                                >
+                                <span class="placeholder" data-placeholder="Số điện thoại"></span>
+                            </div>
+
+                            <div class="col-md-12 form-group p_star">
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="shipping_email"
+                                    name="shipping_email"
+                                    value="{{ old('shipping_email', $customer->email ?? '') }}"
+                                >
+                                <span class="placeholder" data-placeholder="Email"></span>
+                            </div>
+
+                            <div class="col-md-12 form-group p_star">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="shipping_address"
+                                    name="shipping_address"
+                                    value="{{ old('shipping_address', $customer->address ?? '') }}"
+                                    required
+                                >
+                                <span class="placeholder" data-placeholder="Địa chỉ nhận hàng"></span>
+                            </div>
                         </div>
-                        <a class="lost_pass" href="#">Lost your password?</a>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="order_box">
+                            <h2>Đơn hàng của bạn</h2>
+                            <ul class="list">
+                                <li>
+                                    <a href="javascript:void(0)">Sản phẩm <span>Tổng</span></a>
+                                </li>
+                                @foreach($cartItems as $item)
+                                    @php
+                                        $price = $item->product?->final_price ?? 0;
+                                        $lineTotal = $price * (int) $item->quantity;
+                                    @endphp
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            {{ $item->product?->name ?? 'Sản phẩm' }}
+                                            <span class="middle">x {{ (int) $item->quantity }}</span>
+                                            <span class="last">{{ number_format($lineTotal, 0, ',', '.') }}đ</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+
+                            <ul class="list list_2">
+                                <li>
+                                    <a href="javascript:void(0)">Tạm tính <span>{{ number_format($subtotal, 0, ',', '.') }}đ</span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">Phí vận chuyển <span>0đ</span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">Tổng thanh toán <span>{{ number_format($subtotal, 0, ',', '.') }}đ</span></a>
+                                </li>
+                            </ul>
+
+                            <div class="payment_item">
+                                <div class="radion_btn">
+                                    <input
+                                        type="radio"
+                                        id="payment_cod"
+                                        name="payment_method"
+                                        value="{{ \App\Models\Order::PAYMENT_METHOD_COD }}"
+                                        {{ old('payment_method', \App\Models\Order::PAYMENT_METHOD_COD) === \App\Models\Order::PAYMENT_METHOD_COD ? 'checked' : '' }}
+                                    >
+                                    <label for="payment_cod">Thanh toán khi nhận hàng (COD)</label>
+                                    <div class="check"></div>
+                                </div>
+                                <p>Bạn thanh toán bằng tiền mặt khi nhận hàng tại địa chỉ đã đăng ký.</p>
+                            </div>
+
+                            <div class="payment_item">
+                                <div class="radion_btn">
+                                    <input
+                                        type="radio"
+                                        id="payment_vnpay"
+                                        name="payment_method"
+                                        value="{{ \App\Models\Order::PAYMENT_METHOD_VNPAY }}"
+                                        {{ old('payment_method') === \App\Models\Order::PAYMENT_METHOD_VNPAY ? 'checked' : '' }}
+                                    >
+                                    <label for="payment_vnpay">Thanh toán qua VNPay</label>
+                                    <div class="check"></div>
+                                </div>
+                                <p>Bạn sẽ được chuyển sang cổng thanh toán VNPay để hoàn tất giao dịch một cách an toàn.</p>
+                            </div>
+
+                            <button type="submit" class="main_btn w-100 border-0">Đặt hàng ngay</button>
+                        </div>
                     </div>
                 </form>
             </div>
-            <div class="cupon_area">
-                <div class="check_title">
-                    <h2>
-                        Have a coupon?
-                        <a href="#">Click here to enter your code</a>
-                    </h2>
-                </div>
-                <input type="text" placeholder="Enter coupon code" />
-                <a class="tp_btn" href="#">Apply Coupon</a>
-            </div>
-            <div class="billing_details">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <h3>Billing Details</h3>
-                        <form
-                            class="row contact_form"
-                            action="#"
-                            method="post"
-                            novalidate="novalidate"
-                        >
-                            <div class="col-md-6 form-group p_star">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="first"
-                                    name="name"
-                                />
-                                <span
-                                    class="placeholder"
-                                    data-placeholder="First name"
-                                ></span>
-                            </div>
-                            <div class="col-md-6 form-group p_star">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="last"
-                                    name="name"
-                                />
-                                <span class="placeholder" data-placeholder="Last name"></span>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="company"
-                                    name="company"
-                                    placeholder="Company name"
-                                />
-                            </div>
-                            <div class="col-md-6 form-group p_star">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="number"
-                                    name="number"
-                                />
-                                <span
-                                    class="placeholder"
-                                    data-placeholder="Phone number"
-                                ></span>
-                            </div>
-                            <div class="col-md-6 form-group p_star">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="email"
-                                    name="compemailany"
-                                />
-                                <span
-                                    class="placeholder"
-                                    data-placeholder="Email Address"
-                                ></span>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <select class="country_select">
-                                    <option value="1">Country</option>
-                                    <option value="2">Country</option>
-                                    <option value="4">Country</option>
-                                </select>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="add1"
-                                    name="add1"
-                                />
-                                <span
-                                    class="placeholder"
-                                    data-placeholder="Address line 01"
-                                ></span>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="add2"
-                                    name="add2"
-                                />
-                                <span
-                                    class="placeholder"
-                                    data-placeholder="Address line 02"
-                                ></span>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="city"
-                                    name="city"
-                                />
-                                <span class="placeholder" data-placeholder="Town/City"></span>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <select class="country_select">
-                                    <option value="1">District</option>
-                                    <option value="2">District</option>
-                                    <option value="4">District</option>
-                                </select>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="zip"
-                                    name="zip"
-                                    placeholder="Postcode/ZIP"
-                                />
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <div class="creat_account">
-                                    <input type="checkbox" id="f-option2" name="selector" />
-                                    <label for="f-option2">Create an account?</label>
-                                </div>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <div class="creat_account">
-                                    <h3>Shipping Details</h3>
-                                    <input type="checkbox" id="f-option3" name="selector" />
-                                    <label for="f-option3">Ship to a different address?</label>
-                                </div>
-                                <textarea
-                                    class="form-control"
-                                    name="message"
-                                    id="message"
-                                    rows="1"
-                                    placeholder="Order Notes"
-                                ></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="order_box">
-                            <h2>Your Order</h2>
-                            <ul class="list">
-                                <li>
-                                    <a href="#"
-                                    >Product
-                                        <span>Total</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                    >Fresh Blackberry
-                                        <span class="middle">x 02</span>
-                                        <span class="last">$720.00</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                    >Fresh Tomatoes
-                                        <span class="middle">x 02</span>
-                                        <span class="last">$720.00</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                    >Fresh Brocoli
-                                        <span class="middle">x 02</span>
-                                        <span class="last">$720.00</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="list list_2">
-                                <li>
-                                    <a href="#"
-                                    >Subtotal
-                                        <span>$2160.00</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                    >Shipping
-                                        <span>Flat rate: $50.00</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                    >Total
-                                        <span>$2210.00</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="payment_item">
-                                <div class="radion_btn">
-                                    <input type="radio" id="f-option5" name="selector" />
-                                    <label for="f-option5">Check payments</label>
-                                    <div class="check"></div>
-                                </div>
-                                <p>
-                                    Please send a check to Store Name, Store Street, Store Town,
-                                    Store State / County, Store Postcode.
-                                </p>
-                            </div>
-                            <div class="payment_item active">
-                                <div class="radion_btn">
-                                    <input type="radio" id="f-option6" name="selector" />
-                                    <label for="f-option6">Paypal </label>
-                                    <img src="/customer/img/product/single-product/card.jpg" alt="" />
-                                    <div class="check"></div>
-                                </div>
-                                <p>
-                                    Please send a check to Store Name, Store Street, Store Town,
-                                    Store State / County, Store Postcode.
-                                </p>
-                            </div>
-                            <div class="creat_account">
-                                <input type="checkbox" id="f-option4" name="selector" />
-                                <label for="f-option4">I’ve read and accept the </label>
-                                <a href="#">terms & conditions*</a>
-                            </div>
-                            <a class="main_btn" href="#">Proceed to Paypal</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
-    <!--================End Checkout Area =================-->
 @endsection

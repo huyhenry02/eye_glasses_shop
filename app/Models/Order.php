@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Order extends Model
 {
     protected $table = 'orders';
+
     protected $fillable = [
         'customer_id',
         'order_code',
@@ -28,6 +29,15 @@ class Order extends Model
         'payment_secure_hash',
         'updated_by',
     ];
+
+    protected $casts = [
+        'customer_id' => 'integer',
+        'total_amount' => 'integer',
+        'completed_at' => 'date',
+        'payment_time' => 'datetime',
+        'updated_by' => 'integer',
+    ];
+
     public const STATUS_PENDING = 'pending';
     public const STATUS_PROCESSING = 'processing';
     public const STATUS_SHIPPING = 'shipping';
@@ -40,7 +50,6 @@ class Order extends Model
         self::STATUS_SHIPPING => 'Đang giao hàng',
         self::STATUS_COMPLETED => 'Hoàn thành',
         self::STATUS_CANCELLED => 'Đã hủy',
-
     ];
 
     public const HEADER_STATUSES = [
@@ -68,6 +77,7 @@ class Order extends Model
         self::PAYMENT_METHOD_COD => 'COD',
         self::PAYMENT_METHOD_VNPAY => 'VNPay',
     ];
+
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);

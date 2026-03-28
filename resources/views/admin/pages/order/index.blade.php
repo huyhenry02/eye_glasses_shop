@@ -3,7 +3,7 @@
     <div class="page-header">
         <div class="page-header-left d-flex align-items-center">
             <div class="page-header-title">
-                <h5 class="m-b-10">Danh sách Đơn hàng</h5>
+                <h5 class="m-b-10">Danh sách đơn hàng</h5>
             </div>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Quản trị</a></li>
@@ -16,65 +16,13 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card stretch stretch-full">
-                    <div class="card-header">
-                        <form method="GET" action="{{ route('admin.order.showIndex') }}">
-                            <div class="row g-3">
-                                <div class="col-md-3">
-                                    <input type="text" name="keyword" class="form-control"
-                                           value="{{ request('keyword') }}"
-                                           placeholder="Mã đơn, tên, SĐT, email">
-                                </div>
-
-                                <div class="col-md-2">
-                                    <select name="status" class="form-select">
-                                        <option value="">Trạng thái đơn</option>
-                                        @foreach(\App\Models\Order::STATUSES as $key => $label)
-                                            <option value="{{ $key }}" {{ request('status') === $key ? 'selected' : '' }}>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <select name="payment_status" class="form-select">
-                                        <option value="">TT thanh toán</option>
-                                        @foreach(\App\Models\Order::PAYMENT_STATUSES as $key => $label)
-                                            <option value="{{ $key }}" {{ request('payment_status') === $key ? 'selected' : '' }}>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <select name="payment_method" class="form-select">
-                                        <option value="">Phương thức</option>
-                                        @foreach(\App\Models\Order::PAYMENT_METHODS as $key => $label)
-                                            <option value="{{ $key }}" {{ request('payment_method') === $key ? 'selected' : '' }}>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-3 d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="feather-search me-2"></i> Lọc
-                                    </button>
-                                    <a href="{{ route('admin.order.showIndex') }}" class="btn btn-light">Đặt lại</a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0" id="orderList">
                                 <thead class="table-light">
                                 <tr>
                                     <th style="width:70px;">STT</th>
-                                    <th style="width:150px;">Mã đơn</th>
+                                    <th style="width:250px;">Mã đơn</th>
                                     <th>Người nhận</th>
                                     <th style="width:140px;">Tổng tiền</th>
                                     <th style="width:150px;">Phương thức</th>
@@ -107,13 +55,14 @@
                                         <td class="text-muted">{{ $loop->iteration }}</td>
 
                                         <td class="fw-semibold text-dark">
-                                            {{ $order->order_code ?? '—' }}
+                                            {{ $order->order_code ?? '-' }}
                                         </td>
 
                                         <td>
                                             <div class="d-flex flex-column">
-                                                <span class="fw-semibold text-dark">{{ $order->shipping_name ?? '—' }}</span>
-                                                <small class="text-muted">{{ $order->shipping_phone ?? '—' }}</small>
+                                                <span
+                                                    class="fw-semibold text-dark">{{ $order->shipping_name ?? '-' }}</span>
+                                                <small class="text-muted">{{ $order->shipping_phone ?? '-' }}</small>
                                             </div>
                                         </td>
 
@@ -123,47 +72,51 @@
 
                                         <td>
                                             <span class="badge bg-soft-primary text-primary">
-                                                {{ \App\Models\Order::PAYMENT_METHODS[$order->payment_method] ?? '—' }}
+                                                {{ \App\Models\Order::PAYMENT_METHODS[$order->payment_method] ?? '-' }}
                                             </span>
                                         </td>
 
                                         <td>
                                             <span class="badge {{ $paymentStatusClass }}">
-                                                {{ \App\Models\Order::PAYMENT_STATUSES[$order->payment_status] ?? '—' }}
+                                                {{ \App\Models\Order::PAYMENT_STATUSES[$order->payment_status] ?? '-' }}
                                             </span>
                                         </td>
 
                                         <td>
                                             <span class="badge {{ $statusClass }}">
-                                                {{ \App\Models\Order::STATUSES[$order->status] ?? '—' }}
+                                                {{ \App\Models\Order::STATUSES[$order->status] ?? '-' }}
                                             </span>
                                         </td>
 
                                         <td class="text-muted">
-                                            {{ $order->created_at ? $order->created_at->format('d/m/Y H:i') : '—' }}
+                                            {{ $order->created_at ? $order->created_at->format('d/m/Y H:i') : '-' }}
                                         </td>
 
                                         <td class="text-end">
                                             <div class="dropdown d-inline-block">
-                                                <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button class="btn btn-light btn-sm" type="button"
+                                                        data-bs-toggle="dropdown">
                                                     <i class="feather feather-more-horizontal"></i>
                                                 </button>
 
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     <li>
-                                                        <a class="dropdown-item" href="{{ route('admin.order.showDetail', $order->id) }}">
+                                                        <a class="dropdown-item"
+                                                           href="{{ route('admin.order.showDetail', $order->id) }}">
                                                             <i class="feather-eye me-2"></i>
                                                             <span>Xem</span>
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="{{ route('admin.order.showEdit', $order->id) }}">
+                                                        <a class="dropdown-item"
+                                                           href="{{ route('admin.order.showEdit', $order->id) }}">
                                                             <i class="feather-edit-3 me-2"></i>
                                                             <span>Sửa</span>
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('admin.order.destroy', $order->id) }}" method="POST"
+                                                        <form action="{{ route('admin.order.destroy', $order->id) }}"
+                                                              method="POST"
                                                               onsubmit="return confirm('Bạn chắc chắn muốn xóa đơn hàng này?')">
                                                             @csrf
                                                             @method('DELETE')
@@ -215,6 +168,10 @@
 
         #orderList .dropdown-menu .dropdown-item {
             font-size: 12px;
+        }
+
+        .table-responsive {
+            min-height: calc(100vh - 120px);
         }
     </style>
 @endsection

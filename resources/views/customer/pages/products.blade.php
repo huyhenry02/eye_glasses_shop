@@ -1,13 +1,13 @@
 @extends('customer.layouts.main')
+
 @section('content')
-    <!--================Home Banner Area =================-->
     <section class="banner_area">
         <div class="banner_inner d-flex align-items-center">
             <div class="container">
                 <div class="banner_content d-md-flex justify-content-between align-items-center">
                     <div class="mb-3 mb-md-0">
-                        <h2>Danh sách sản phẩm</h2>
-                        <p>Khám phá các mẫu kính mắt thời trang, hiện đại và phù hợp với nhiều phong cách</p>
+                        <h1>Danh sách sản phẩm</h1>
+                        <p>Khám phá các mẫu kính mắt thời trang, hiện đại và phù hợp với nhiều phong cách khác nhau.</p>
                     </div>
                     <div class="page_link">
                         <a href="{{ route('customer.showIndex') }}">Trang chủ</a>
@@ -17,9 +17,7 @@
             </div>
         </div>
     </section>
-    <!--================End Home Banner Area =================-->
 
-    <!--================Category Product Area =================-->
     <section class="cat_product_area section_gap">
         <div class="container">
             <form method="GET" action="{{ route('customer.showProducts') }}" id="filterForm">
@@ -47,25 +45,47 @@
                         <div class="latest_product_inner">
                             <div class="row">
                                 @forelse($products as $product)
+                                    @php
+                                        $finalPrice = (int) ($product->final_price ?? $product->price ?? 0);
+                                        $isOutOfStock = (int) ($product->stock_quantity ?? 0) <= 0;
+                                    @endphp
                                     <div class="col-lg-4 col-md-6">
-                                        <div class="single-product">
+                                        <div class="single-product h-100 d-flex flex-column">
                                             <div class="product-img">
                                                 <img
                                                     class="card-img"
                                                     src="{{ $product->image ?: '/customer/img/product/inspired-product/i1.jpg' }}"
                                                     alt="{{ $product->name ?? 'Sản phẩm kính mắt' }}"
-                                                />
+                                                >
                                                 <div class="p_icon">
                                                     <a href="{{ route('customer.showProductDetail', $product->id) }}" title="Xem chi tiết">
                                                         <i class="ti-eye"></i>
                                                     </a>
-                                                    <a href="#" title="Thêm vào giỏ hàng">
-                                                        <i class="ti-shopping-cart"></i>
-                                                    </a>
+
+                                                    @auth
+                                                        @if(!$isOutOfStock)
+                                                            <form action="{{ route('customer.cart.add') }}" method="POST" class="d-inline-block m-0">
+                                                                @csrf
+                                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                                <input type="hidden" name="quantity" value="1">
+                                                                <button type="submit" class="border-0 bg-transparent" title="Thêm vào giỏ hàng">
+                                                                    <i class="ti-shopping-cart"></i>
+                                                                </button>
+                                                            </form>
+                                                        @else
+                                                            <a href="javascript:void(0)" title="Sản phẩm hết hàng" class="disabled-product-action">
+                                                                <i class="ti-na"></i>
+                                                            </a>
+                                                        @endif
+                                                    @else
+                                                        <a href="{{ route('auth.showLogin') }}" title="Đăng nhập để mua hàng">
+                                                            <i class="ti-shopping-cart"></i>
+                                                        </a>
+                                                    @endauth
                                                 </div>
                                             </div>
 
-                                            <div class="product-btm">
+                                            <div class="product-btm d-flex flex-column flex-grow-1">
                                                 <a href="{{ route('customer.showProductDetail', $product->id) }}" class="d-block">
                                                     <h4>{{ $product->name ?? 'Kính mắt thời trang' }}</h4>
                                                 </a>
@@ -76,20 +96,41 @@
                                                     </div>
                                                 @endif
 
-                                                <div class="mt-3">
-                                                    @if(!empty($product->discount_price) && $product->discount_price < $product->price)
-                                                        <span class="mr-4">{{ number_format($product->discount_price) }}đ</span>
-                                                        <del>{{ number_format($product->price) }}đ</del>
+                                                <div class="mt-2 mb-3">
+                                                    @if(!empty($product->discount_price) && (int) $product->discount_price < (int) $product->price)
+                                                        <span class="mr-4 font-weight-bold">{{ number_format($product->discount_price, 0, ',', '.') }}đ</span>
+                                                        <del>{{ number_format($product->price, 0, ',', '.') }}đ</del>
                                                     @else
-                                                        <span class="mr-4">{{ number_format($product->price ?? 0) }}đ</span>
+                                                        <span class="mr-4 font-weight-bold">{{ number_format($product->price ?? 0, 0, ',', '.') }}đ</span>
                                                     @endif
+                                                </div>
+
+                                                <div class="mt-auto d-flex align-items-center justify-content-between flex-wrap" style="gap: 10px;">
+                                                    <small class="{{ $isOutOfStock ? 'text-danger' : 'text-success' }}">
+                                                        {{ $isOutOfStock ? 'Hết hàng' : 'Còn hàng' }}
+                                                    </small>
+
+                                                    @auth
+                                                        @if(!$isOutOfStock)
+                                                            <form action="{{ route('customer.cart.add') }}" method="POST" class="m-0">
+                                                                @csrf
+                                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                                <input type="hidden" name="quantity" value="1">
+                                                                <button type="submit" class="genric-btn primary-border small">Thêm vào giỏ</button>
+                                                            </form>
+                                                        @else
+                                                            <button type="button" class="genric-btn disable small" disabled>Hết hàng</button>
+                                                        @endif
+                                                    @else
+                                                        <a href="{{ route('auth.showLogin') }}" class="genric-btn primary-border small">Mua ngay</a>
+                                                    @endauth
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 @empty
                                     <div class="col-12">
-                                        <div class="text-center py-5">
+                                        <div class="text-center py-5 border rounded">
                                             <h5>Không có sản phẩm phù hợp</h5>
                                             <p>Vui lòng thử lại với bộ lọc khác.</p>
                                         </div>
@@ -189,7 +230,7 @@
                                         </li>
 
                                         @foreach($categories as $category)
-                                            <li class="{{ (string)$selectedCategory === (string)$category->id ? 'active' : '' }}">
+                                            <li class="{{ (string) $selectedCategory === (string) $category->id ? 'active' : '' }}">
                                                 <a href="{{ route('customer.showProducts', array_merge(request()->except('page'), ['category_id' => $category->id])) }}">
                                                     {{ $category->name }}
                                                 </a>
@@ -255,7 +296,23 @@
                 </div>
             </form>
         </div>
+
         <style>
+            .disabled-product-action {
+                opacity: 0.65;
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+
+            .p_icon form button {
+                width: 40px;
+                height: 40px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: #ffffff;
+            }
+
             .custom-pagination-wrapper {
                 margin-top: 45px;
                 text-align: center;

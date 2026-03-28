@@ -66,8 +66,8 @@
                         <span class="nxl-mtext">Quản lý hóa đơn</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item"><a class="nxl-link" href="">Danh sách hóa đơn</a></li>
-                        <li class="nxl-item"><a class="nxl-link" href="">Thêm mới hóa đơn</a></li>
+                        <li class="nxl-item"><a class="nxl-link" href="{{ route('admin.invoice.showIndex') }}">Danh sách hóa đơn</a></li>
+                        <li class="nxl-item"><a class="nxl-link" href="{{ route('admin.invoice.showIndex') }}">Thêm mới hóa đơn</a></li>
                     </ul>
                 </li>
             </ul>

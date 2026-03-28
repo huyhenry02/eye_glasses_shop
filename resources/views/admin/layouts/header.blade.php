@@ -28,19 +28,19 @@
                             <div class="d-flex align-items-center">
                                 <img src="/assets/images/avatar/1.png" alt="user-image" class="img-fluid user-avtar" />
                                 <div>
-                                    <h6 class="text-dark mb-0">Alexandra Della <span class="badge bg-soft-success text-success ms-1">PRO</span></h6>
-                                    <span class="fs-12 fw-medium text-muted">alex@example.com</span>
+                                    <h6 class="text-dark mb-0">{{ auth()->user()->employee()->full_name ?? '' }}<span class="badge bg-soft-success text-success ms-1">PRO</span></h6>
+                                    <span class="fs-12 fw-medium text-muted">{{ auth()->user()->employee()->email ?? '' }}</span>
                                 </div>
                             </div>
                         </div>
-                        <a href="javascript:void(0);" class="dropdown-item">
+                        <a href="{{ route('customer.showIndex') }}" class="dropdown-item">
                             <i class="feather-settings"></i>
-                            <span>Account Settings</span>
+                            <span>Web shop</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="./auth-login-minimal.html" class="dropdown-item">
+                        <a href="{{ route('auth.logout') }}" class="dropdown-item">
                             <i class="feather-log-out"></i>
-                            <span>Logout</span>
+                            <span>Đăng xuất</span>
                         </a>
                     </div>
                 </div>

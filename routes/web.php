@@ -3,26 +3,29 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Customer\ShopController;
-use App\Http\Controllers\Admin\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect()->route('customer.showIndex');
 });
+
 Route::prefix('auth')
     ->name('auth.')
     ->group(function () {
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('showLogin');
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister');
+        Route::get('/login', [AuthController::class, 'showLogin'])->name('showLogin');
+        Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister');
 
-    Route::post('/login', [AuthController::class, 'postLogin'])->name('postLogin');
-    Route::post('/register', [AuthController::class, 'postRegister'])->name('postRegister');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-});
+        Route::post('/login', [AuthController::class, 'postLogin'])->name('postLogin');
+        Route::post('/register', [AuthController::class, 'postRegister'])->name('postRegister');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    });
+
 Route::prefix('customer')
     ->name('customer.')
     ->group(function () {
@@ -34,7 +37,7 @@ Route::prefix('customer')
         Route::get('/product/{product}', [ShopController::class, 'showProductDetail'])->name('showProductDetail');
 
         Route::get('/cart', [CheckoutController::class, 'showCart'])->name('showCart')->middleware('auth');
-        Route::post('/cart/add', [CheckoutController::class, 'addToCart'])->name('cart.add')->middleware('auth');;
+        Route::post('/cart/add', [CheckoutController::class, 'addToCart'])->name('cart.add')->middleware('auth');
         Route::post('/cart/update/{id}', [CheckoutController::class, 'updateCart'])->name('cart.update')->middleware('auth');
         Route::delete('/cart/delete/{id}', [CheckoutController::class, 'deleteCart'])->name('cart.delete')->middleware('auth');
 
@@ -43,11 +46,12 @@ Route::prefix('customer')
 
         Route::get('/orders', [CheckoutController::class, 'index'])->name('orders.index')->middleware('auth');
         Route::get('/orders/{id}', [CheckoutController::class, 'show'])->name('orders.show')->middleware('auth');
-        Route::get('/vnpay-return', [CheckoutController::class, 'vnpayReturn'])->name('vnpay.return')->middleware('auth');
+        Route::get('/vnpay-return', [CheckoutController::class, 'vnpayReturn'])->name('vnpay.return');
     });
 
 Route::prefix('admin')
     ->name('admin.')
+    ->middleware('auth')
     ->group(function () {
         Route::prefix('employee')
             ->name('employee.')
@@ -97,6 +101,7 @@ Route::prefix('admin')
                 Route::post('/edit/{id}', [ProductController::class, 'update'])->name('update');
                 Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('destroy');
             });
+
         Route::prefix('order')
             ->name('order.')
             ->group(function () {
@@ -106,5 +111,17 @@ Route::prefix('admin')
 
                 Route::post('/edit/{id}', [OrderController::class, 'update'])->name('update');
                 Route::delete('/delete/{id}', [OrderController::class, 'destroy'])->name('destroy');
+            });
+
+        Route::prefix('invoice')
+            ->name('invoice.')
+            ->group(function () {
+                Route::get('/', [InvoiceController::class, 'showIndex'])->name('showIndex');
+                Route::get('/create', [InvoiceController::class, 'showCreate'])->name('showCreate');
+                Route::get('/edit/{id}', [InvoiceController::class, 'showEdit'])->name('showEdit');
+                Route::post('/create', [InvoiceController::class, 'store'])->name('store');
+                Route::post('/edit/{id}', [InvoiceController::class, 'update'])->name('update');
+                Route::delete('/delete/{id}', [InvoiceController::class, 'destroy'])->name('destroy');
+                Route::get('/vnpay-return', [InvoiceController::class, 'vnpayReturn'])->name('vnpayReturn');
             });
     });
